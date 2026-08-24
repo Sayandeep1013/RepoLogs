@@ -314,7 +314,7 @@ function shell({ title, desc, accent, bodyClass = '', chrome, main, boot, loader
 <script>(function(){try{var d=document.documentElement,
 t=localStorage.getItem('rein-theme');
 if(t&&/^(paper|concrete|dark)$/.test(t))d.setAttribute('data-theme',t);
-var k=t==='dark'||(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);
+var k=t==='dark';
 d.style.setProperty('--accent',k?'${(boot && boot.accent && boot.accent.dark) || '#12A5AA'}':'${
       (boot && boot.accent && boot.accent.light) || '#086063'
     }');

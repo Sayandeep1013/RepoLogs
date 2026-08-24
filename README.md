@@ -110,7 +110,7 @@ Set pieces are decorative. Nothing in them gates content, and each is wrapped so
 |---|---|
 | Rail | `6vw`, min 64px — fixed |
 | Column | `96px` → `118px` ≥1600 → `132px` ≥2050 |
-| Ground | `#F0EDE7` paper · `#CED1D3` concrete · `#17110E` dark |
+| Ground | `#F0EDE7` paper · `#CED1D3` concrete (default) · `#17110E` dark |
 | Ink | `#3F2212` / `#E7DED6` |
 | Hover | `#A34A00` paper · `#B85400` concrete · `#FF9A3D` dark |
 | Easing | `cubic-bezier(.16,1,.3,1)` for everything that moves in space |
@@ -146,10 +146,19 @@ The **intro loader** wears the site's own clothes — the same ground, ink and h
 
 The **between-chapter loader** carries the incoming chapter's number, title and accent, so the colour lands before the page does. Its ring draws itself on with the same gesture as the arrow ring at the end of a chapter, then the numeral and title rise. It is handed across the navigation in `sessionStorage` and stamped into its covering state *before first paint* — so it is never seen sliding in twice, and the ring never draws twice.
 
-- **The frieze** — a technical elevation along the base of every track, generated deterministically from the chapter slug and drawn progressively by scroll position.
-- **Diagrams** draw themselves on with `stroke-dashoffset`, staggered per path.
-- **Rings and leaders** — the big numeral, every icon button, the line into the constraint blob — draw in on reveal.
-- **Ghost outlines** behind every screenshot: the drawing and the photograph of the same object, the way a monograph plates them.
+Almost all of the line work is **scroll-linked rather than one-shot**: the stroke
+length is a pure function of how far its panel has crossed the viewport, so
+scrolling back un-draws it. Nothing has already finished by the time you reach
+it, and nothing is stuck once you pass it.
+
+- **The frieze** — a technical elevation along the base of every track, generated deterministically from the chapter slug, drawn by scroll position.
+- **Diagrams** draw themselves on with `stroke-dashoffset`, staggered per path — and undraw on the way back.
+- **Ghost outlines** behind every screenshot, and the big chapter numeral: same treatment.
+- **Icon-button rings and the constraint leader** stay one-shot on reveal, since they sit beside text that would be distracting if it flickered.
+
+Anything already on screen at load has nothing to scroll into, so the whole
+system ramps up once over 1.5s on arrival; off-screen elements sit at zero
+regardless, so that only shows where it should.
 
 ---
 
@@ -205,6 +214,19 @@ BASE=/RepoLogs node build.mjs
 ```
 
 ---
+
+## Viewport
+
+The design breathes at around 900px of height. Most people run the browser at
+100%, which on a common laptop is closer to 768px — nothing overflowed there,
+but every gap collapsed and it read as jumbled. Two height breakpoints
+(`max-height: 900px` and `780px`) tighten the vertical rhythm deliberately
+instead: smaller numeral and title, tighter gaps, smaller set-piece stages and
+shaped screenshots. The twelve-item chapter list on each title card is set in
+two columns of six, which is both more compact and a better reading shape.
+
+Checked clean at 1280×720, 1366×768, 1440×790, 1536×864, 1920×1080 and
+2400×1350 across all fourteen pages.
 
 ## Accessibility
 

@@ -19,7 +19,7 @@
   function currentTheme() {
     var s = root.getAttribute('data-theme');
     if (THEMES.indexOf(s) !== -1) return s;
-    return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'concrete';
+    return 'concrete';   /* dark is opt-in; the OS does not choose */
   }
   function isDark() { return currentTheme() === 'dark'; }
   function paintAccent() {
@@ -49,10 +49,6 @@
       labelTheme();
     });
   }
-  if (window.matchMedia) {
-    var mq = matchMedia('(prefers-color-scheme: dark)');
-    if (mq.addEventListener) mq.addEventListener('change', paintAccent);
-  }
 
   /* ---------------- scroll engine ---------------- */
   var target = 0, cur = 0, max = 0;
@@ -64,7 +60,7 @@
     target = Math.min(target, max);
   }
   measure();
-  window.addEventListener('resize', measure);
+  window.addEventListener('resize', function () { measure(); initLinked(); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   window.addEventListener('load', measure);
 
@@ -219,6 +215,86 @@
   var hint = document.querySelector('.hint');
   var hintGone = false;
 
+  /* ----------------------------------------------------------------
+     Scroll-linked line art. These are not one-shot reveals: the stroke
+     length is a pure function of how far the panel has crossed the
+     viewport, so scrolling back un-draws them. Nothing has "already
+     happened" by the time you arrive, and nothing is stuck once passed.
+     ---------------------------------------------------------------- */
+  var linked = [], linkedPanels = [];
+  function panelGroup(el) {
+    for (var i = 0; i < linkedPanels.length; i++) if (linkedPanels[i].el === el) return linkedPanels[i];
+    var g = { el: el, p: 0 };
+    linkedPanels.push(g);
+    return g;
+  }
+  function initLinked() {
+    linked = []; linkedPanels = [];
+    var groups = [
+      ['.diagram .d:not(.dash)', 0.12, 0.66, 0.055],  /* [sel, from, to, stagger] */
+      ['.shot__ghost .g', 0.14, 0.62, 0],
+      ['.tc__num .ring path', 0.10, 0.55, 0],
+    ];
+    groups.forEach(function (g) {
+      var els = document.querySelectorAll(g[0]);
+      for (var i = 0; i < els.length; i++) {
+        var el = els[i];
+        var panel = el.closest('.panel');
+        if (!panel) continue;
+        var svg = el.ownerSVGElement;
+        var scale = 1;
+        if (svg && svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width) {
+          var r = svg.getBoundingClientRect();
+          if (r.width) scale = r.width / svg.viewBox.baseVal.width;
+        }
+        var len = 0;
+        try {
+          len = el.tagName === 'rect'
+            ? (function (b) { return (b.width + b.height) * 2; })(el.getBBox())
+            : el.getTotalLength();
+        } catch (e) { len = 0; }
+        if (!len) len = 400;
+        len = Math.ceil(len * scale * 1.3) + 12;
+        el.style.strokeDasharray = len;
+        el.style.strokeDashoffset = reduce ? 0 : len;
+        var grp = panelGroup(panel);
+        linked.push({
+          el: el, group: grp, len: len, last: -1,
+          from: g[1], to: g[2], delay: Math.min(i, 22) * g[3],
+        });
+      }
+    });
+  }
+  /* Anything already on screen at load has nothing to scroll into, so a purely
+     position-driven value would start fully drawn. Ramp the whole system up
+     once on arrival; off-screen elements sit at 0 regardless, so this is only
+     visible where it should be. */
+  var introFrom = 0;
+  function driveLinked() {
+    if (reduce) return;
+    if (!introFrom) introFrom = performance.now();
+    var ramp = Math.min(1, (performance.now() - introFrom) / 1500);
+    ramp = 1 - Math.pow(1 - ramp, 3);        /* ease out */
+    var vw = stage.clientWidth;
+    /* a diagram is ~30 paths in one panel — read each panel's rect once */
+    for (var g = 0; g < linkedPanels.length; g++) {
+      var lp = linkedPanels[g];
+      var pr = lp.el.getBoundingClientRect();
+      lp.p = (vw - pr.left) / (vw + pr.width);
+    }
+    for (var i = 0; i < linked.length; i++) {
+      var o = linked[i];
+      /* 0 when the panel's left edge is at the right of the stage,
+         1 when its right edge has left on the other side */
+      var p = o.group.p;
+      var a = o.from + o.delay, b = o.to + o.delay;
+      var k = (p - a) / (b - a);
+      k = k < 0 ? 0 : k > 1 ? 1 : k;
+      var off = Math.round(o.len * (1 - k * ramp));
+      if (off !== o.last) { o.el.style.strokeDashoffset = off; o.last = off; }
+    }
+  }
+
   /* the frieze draws itself in step with how far you have travelled */
   var friezePaths = [];
   function initFrieze() {
@@ -257,6 +333,7 @@
       }
     }
     parallax(cur);
+    driveLinked();
     requestAnimationFrame(frame);
   }
 
@@ -298,38 +375,13 @@
         var c = en.target.querySelector('[data-custom]');
         if (c && !revealed.has(c)) { revealed.add(c); bootCustom(c); }
       });
-    }, { root: stage, rootMargin: '0px 12% 0px 12%', threshold: 0.12 });
+    }, { root: stage, rootMargin: '0px -14% 0px -14%', threshold: 0.01 });
     for (var j = 0; j < items.length; j++) io.observe(items[j]);
   }
 
   function drawDiagram(svg) {
+    /* the strokes are driven by driveLinked(); this only brings the labels up */
     if (svg.classList.contains('drawn')) return;
-    /* The strokes use vector-effect:non-scaling-stroke, so the browser applies
-       stroke-dasharray in rendered pixels while getTotalLength/getBBox report
-       user units. Scale the dash length by the viewBox→screen ratio or the
-       pattern falls short and leaves one edge of every box undrawn. */
-    var vb = svg.viewBox && svg.viewBox.baseVal;
-    var rect = svg.getBoundingClientRect();
-    var scale = vb && vb.width && rect.width ? rect.width / vb.width : 1;
-    var strokes = svg.querySelectorAll('.d:not(.dash)');
-    for (var i = 0; i < strokes.length; i++) {
-      var el = strokes[i], len = 0;
-      if (el.tagName === 'rect') {
-        var rb = el.getBBox();
-        len = (rb.width + rb.height) * 2;          /* getTotalLength is unreliable on rect */
-      } else {
-        try { len = el.getTotalLength ? el.getTotalLength() : 0; } catch (e) { len = 0; }
-      }
-      if (!len) {
-        var bb = el.getBBox ? el.getBBox() : null;
-        len = bb ? (bb.width + bb.height) * 2 : 200;
-      }
-      /* overshoot — a dash longer than the path renders solid, a dash one
-         pixel short leaves a visible gap at the join. The margin also absorbs
-         moderate resizes without having to recompute. */
-      el.style.setProperty('--len', Math.ceil(len * scale * 1.3) + 12);
-      el.style.setProperty('--delay', (Math.min(i, 26) * 0.035).toFixed(3) + 's');
-    }
     requestAnimationFrame(function () { svg.classList.add('drawn'); });
   }
 
@@ -448,6 +500,7 @@
     measure();
     collectParallax();
     initFrieze();
+    initLinked();
     initReveals();
     /* entering transition */
     if (!reduce) {

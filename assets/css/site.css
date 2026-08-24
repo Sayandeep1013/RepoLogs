@@ -43,15 +43,8 @@
   --rule:rgba(63,34,18,.24); --rule-2:rgba(63,34,18,.48);
   --on-accent:#FBFAF8; --hover:#A34A00;
 }
-/* ── DARK ── */
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme]){
-    --ground:#17110E; --surface:#201915; --sunk:#120D0B;
-    --ink:#E7DED6; --ink-2:#A08B7C;
-    --rule:rgba(231,222,214,.22); --rule-2:rgba(231,222,214,.42);
-    --accent:#12A5AA; --on-accent:#17110E; --hover:#FF9A3D;
-  }
-}
+/* ── DARK ── opt-in only. The site opens light whatever the OS prefers;
+   a dark desktop should not decide how a first impression looks. ── */
 :root[data-theme="dark"]{
   --ground:#17110E; --surface:#201915; --sunk:#120D0B;
   --ink:#E7DED6; --ink-2:#A08B7C;
@@ -192,7 +185,9 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
 .tc{justify-content:flex-start;padding-top:68px;padding-bottom:84px}
 .tc__top{display:flex;gap:26px;align-items:flex-start}
 .tc__group{margin-top:auto;display:flex;flex-direction:column;gap:26px}
-.tc__list{list-style:none;margin:0;padding:0;font-size:.86rem;line-height:1.85}
+.tc__list{list-style:none;margin:0;padding:0;font-size:.86rem;line-height:1.85;
+  display:grid;grid-template-columns:repeat(2,max-content);gap:0 30px;
+  grid-auto-flow:column;grid-template-rows:repeat(6,auto)}
 .tc__list a{color:var(--ink-2);text-decoration:none;display:flex;gap:9px;align-items:center}
 .tc__list a:hover{color:var(--accent)}
 .tc__list .on{color:var(--ink)}
@@ -288,7 +283,7 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
   fill:none;stroke:var(--accent);stroke-width:1.2;vector-effect:non-scaling-stroke;
 }
 .shot__ghost .g{stroke-dasharray:var(--glen,0);stroke-dashoffset:var(--glen,0)}
-.rv.in .shot__ghost .g{stroke-dashoffset:0;transition:stroke-dashoffset 1.4s ease-out .15s}
+/* scroll-linked, like the diagrams */
 .shot__cap{display:flex;align-items:flex-start;gap:11px;margin-top:20px;max-width:330px}
 .shot__cap span{font-size:.86rem;line-height:1.4}
 .shot__cap .mark{
@@ -323,10 +318,10 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
 .diagram .tl{font-size:9px;fill:var(--accent);letter-spacing:.16em}
 /* draw-on */
 .diagram .d{stroke-dasharray:var(--len,0);stroke-dashoffset:var(--len,0)}
-.diagram.drawn .d{stroke-dashoffset:0;transition:stroke-dashoffset 1.2s ease-out var(--delay,0s)}
+/* no transition: the scroll position drives this directly, so it reverses */
 .diagram .d.dash{stroke-dasharray:4 3!important;stroke-dashoffset:0!important}
-.diagram .t{opacity:0;transition:opacity .5s ease-out}
-.diagram.drawn .t{opacity:1;transition-delay:.55s}
+.diagram .t{opacity:0;transition:opacity .7s ease-out}
+.diagram.drawn .t{opacity:1;transition-delay:.5s}
 
 /* ============================ CODE ============================ */
 .code{justify-content:center}
@@ -385,7 +380,7 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
 
 /* ============================ REVEALS ============================ */
 .rv{opacity:0;transform:translateY(26px)}
-.rv.in{opacity:1;transform:none;transition:opacity .8s var(--ease),transform 1s var(--ease)}
+.rv.in{opacity:1;transform:none;transition:opacity 1.15s var(--ease),transform 1.35s var(--ease)}
 
 /* ============================ LOADERS ============================ */
 /* The intro loader wears the site's own clothes — same ground, same ink, same
@@ -739,17 +734,63 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
 
 /* ---- more line animation: rings and leaders draw on reveal ---- */
 .tc__num .ring path{stroke-dasharray:340;stroke-dashoffset:340}
-.rv.in .tc__num .ring path{stroke-dashoffset:0;transition:stroke-dashoffset 1.5s ease-out .2s}
+/* scroll-linked */
 .cons__lead{width:0}
-.rv.in .cons__lead{width:60px;transition:width .9s var(--ease) .35s}
+.rv.in .cons__lead{width:60px;transition:width 1.4s var(--ease) .5s}
 .icon-btn path.o{stroke-dasharray:160;stroke-dashoffset:160}
-.rv.in .icon-btn path.o{stroke-dashoffset:0;transition:stroke-dashoffset 1.1s ease-out .25s,stroke .1s ease-in-out}
+.rv.in .icon-btn path.o{stroke-dashoffset:0;transition:stroke-dashoffset 1.7s ease-out .35s,stroke .1s ease-in-out}
 .icon-btn path.g{opacity:0}
-.rv.in .icon-btn path.g{opacity:1;transition:opacity .5s ease-out .7s,stroke .3s ease-in-out,fill .3s ease-in-out}
+.rv.in .icon-btn path.g{opacity:1;transition:opacity .7s ease-out 1.1s,stroke .3s ease-in-out,fill .3s ease-in-out}
 .numeral .ring path{stroke-dasharray:340;stroke-dashoffset:0}
 @media (prefers-reduced-motion:reduce){
   .tc__num .ring path,.icon-btn path.o{stroke-dashoffset:0}
   .cons__lead{width:60px}
   .icon-btn path.g{opacity:1}
   .frieze path{stroke-dashoffset:0!important}
+}
+
+/* ---------------------------------------------------------------------
+   Short viewports. Most people run the browser at 100%, which on a common
+   laptop is ~768px of height — half what the design breathes at. Nothing
+   overflowed there, but every gap collapsed to nothing and it read as
+   jumbled. These tighten the rhythm deliberately instead.
+   --------------------------------------------------------------------- */
+@media (max-height:900px){
+  :root{--pad:26px}
+  .tc{padding-top:60px;padding-bottom:64px}
+  .tc__group{gap:18px}
+  .tc__list{font-size:.82rem;line-height:1.7;gap:0 26px}
+  .tc__num{width:96px;height:93px}
+  .tc__num b{font-size:2.7rem}
+  .tc__h{font-size:clamp(1.7rem,2.8vw,2.4rem)}
+  .tc__p{font-size:.94rem;margin-bottom:12px}
+  .rail__nav{gap:6px}
+  .rail__mid{gap:12px}
+  .cons__flip{width:250px;height:250px}
+  .custom__stage{height:min(56vh,400px)!important}
+  .diagram{max-height:52vh}
+  .shot__fig--blob .shot__frame{width:250px;height:250px}
+  .shot__fig--lens .shot__frame{width:210px;height:285px}
+  .shot__fig--slab .shot__frame{width:290px;height:190px}
+  .shot__cap{margin-top:14px}
+  .frieze{height:clamp(58px,8vh,88px)}
+  .code pre{max-height:48vh;font-size:11.5px}
+}
+@media (max-height:780px){
+  :root{--pad:20px}
+  .tc{padding-top:54px;padding-bottom:52px}
+  .tc__group{gap:12px}
+  .tc__list{font-size:.79rem;line-height:1.58}
+  .tc__num{width:80px;height:78px}
+  .tc__num b{font-size:2.2rem}
+  .tc__h{font-size:clamp(1.5rem,2.4vw,2rem);margin-bottom:8px}
+  .tc__p{font-size:.88rem;margin-bottom:10px}
+  .rail__nav{gap:4px}
+  .rail__n{width:20px;height:20px;font-size:9px}
+  .cons__flip{width:216px;height:216px}
+  .custom__stage{height:min(52vh,340px)!important}
+  .shot__fig--blob .shot__frame{width:216px;height:216px}
+  .shot__fig--lens .shot__frame{width:186px;height:250px}
+  .shot__fig--slab .shot__frame{width:256px;height:168px}
+  .hint{display:none}
 }
