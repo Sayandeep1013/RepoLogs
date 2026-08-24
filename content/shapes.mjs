@@ -44,8 +44,11 @@ export const iconBtn = (glyph, label, href = null, cls = '', attrs = '') => {
    The D of .DEV, drawn as a letterform and used as a window. Media goes
    inside the clip; the edges are stroked on top so it still reads as a D.
    ------------------------------------------------------------------ */
-export const D_OUTER = 'M14 8 H58 C92 8 110 31 110 65 C110 99 92 122 58 122 H14 Z';
-export const D_INNER = 'M44 37 H58 C75 37 81 48 81 65 C81 82 75 93 58 93 H44 Z';
+/* A slab-serif D, to sit with the display serif the loader is set in.
+   The notch on the left of the outer path is what makes the serifs. */
+export const D_OUTER =
+  'M12 12 H66 C95 12 110 34 110 64 C110 94 95 116 66 116 H12 V107 H29 V21 H12 Z';
+export const D_INNER = 'M57 45 H63 C73 45 79 53 79 64 C79 75 73 83 63 83 H57 Z';
 
 export const dWindow = (id = 'dwin') => `<svg class="dwin" viewBox="0 0 124 130" aria-hidden="true">
   <defs>

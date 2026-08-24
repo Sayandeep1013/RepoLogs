@@ -116,7 +116,8 @@ Set pieces are decorative. Nothing in them gates content, and each is wrapped so
 | Easing | `cubic-bezier(.16,1,.3,1)` for everything that moves in space |
 | Display | Archivo |
 | Body | IBM Plex Sans |
-| Mono, and both loaders | IBM Plex Mono |
+| Mono | IBM Plex Mono |
+| Loader wordmark | Instrument Serif |
 
 ### Accent pairs
 
@@ -141,9 +142,9 @@ Sampled from each project's own screenshots, then corrected for contrast. A sing
 
 ## Loaders and line work
 
-The **intro loader** sets the palette before any content: a full-bleed accent field, registration marks that draw in at the corners, and the wordmark set in mono at display scale — a different register from the rest of the site. The **D of .DEV is a window**: project screenshots cycle inside the letterform, clipped to its outline, with the strokes drawn over the top so it still reads as a D. A counter and a row of chapter ticks show real preload progress. Once per session, skippable by any input.
+The **intro loader** wears the site's own clothes — the same ground, ink and hairlines, with the accent used as an accent — so arriving at chapter 01 is a continuation rather than a cut. The wordmark is the one place a display serif appears (Instrument Serif): a title page, not a splash screen. The **D of .DEV is a window** — a slab-serif letterform set as a versal, larger than the cap height, with project screenshots cycling inside it, clipped to its outline. Registration marks draw in at the corners, a counter and a row of chapter ticks show real preload progress. Once per session, skippable by any input.
 
-The **between-chapter loader** carries the incoming chapter's number, title and accent. It covers on the way out and wipes on the way in, handed across the navigation in `sessionStorage` and stamped before first paint so it is never seen twice.
+The **between-chapter loader** carries the incoming chapter's number, title and accent, so the colour lands before the page does. Its ring draws itself on with the same gesture as the arrow ring at the end of a chapter, then the numeral and title rise. It is handed across the navigation in `sessionStorage` and stamped into its covering state *before first paint* — so it is never seen sliding in twice, and the ring never draws twice.
 
 - **The frieze** — a technical elevation along the base of every track, generated deterministically from the chapter slug and drawn progressively by scroll position.
 - **Diagrams** draw themselves on with `stroke-dashoffset`, staggered per path.

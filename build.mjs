@@ -306,7 +306,7 @@ function shell({ title, desc, accent, bodyClass = '', chrome, main, boot, loader
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
 <link rel="stylesheet" href="${U('/assets/css/site.css')}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23CED1D3'/%3E%3Cpath d='M16 5c8 0 11 3.5 11 11s-3 11-11 11S5 23.5 5 16 8 5 16 5z' fill='${encodeURIComponent(
     accent || '#086063'
@@ -324,7 +324,7 @@ if(sessionStorage.getItem('rein-transit')==='${slug}')d.setAttribute('data-trans
 </head>
 <body class="${bodyClass}">
 ${loader ? loaderMarkup(slug) : ''}
-${transitMarkup()}
+${transitMarkup(boot && boot.chapter)}
 ${chrome}
 ${main}
 <script>window.__REIN__=${JSON.stringify(boot)};</script>
@@ -356,11 +356,19 @@ function loaderMarkup() {
 
 /* the between-chapters loader — same family, smaller, carries the next
    chapter's number and accent so the colour lands before the page does */
-function transitMarkup() {
+function transitMarkup(ch) {
+  /* Pre-filled with this page's own chapter: on arrival the overlay is already
+     correct with no JS, so nothing pops in. Leaving, JS overwrites it with the
+     next chapter before the cover animation runs. */
+  const n = ch ? ch.n : '';
+  const t = ch ? ch.title : '';
   return `<div class="transit" aria-hidden="true">
   <div class="transit__in">
-    <span class="transit__num">${ring()}<b></b></span>
-    <div class="transit__meta"><span class="transit__k"></span><span class="transit__t"></span></div>
+    <span class="transit__num">${ring()}<b>${esc(n)}</b></span>
+    <div class="transit__meta">
+      <span class="transit__k">${n ? 'Chapter ' + esc(n) : ''}</span>
+      <span class="transit__t">${esc(t)}</span>
+    </div>
   </div>
 </div>`;
 }
@@ -404,6 +412,7 @@ function chapterPage(ch, i) {
       n: ch.n,
       title: ch.title,
       accent: ch.accent,
+      chapter: { n: ch.n, title: ch.title },
       next: {
         href: href((i + 1) % chapters.length),
         slug: next.slug,

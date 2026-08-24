@@ -168,9 +168,13 @@
 
     if (transit && !reduce) {
       paintTransit(CH.next);
-      requestAnimationFrame(function () { transit.classList.add('cover'); });
+      requestAnimationFrame(function () {
+        transit.classList.add('cover');
+        /* one frame later so the ring starts from zero as the field arrives */
+        requestAnimationFrame(function () { transit.classList.add('draw'); });
+      });
       try { sessionStorage.setItem('rein-transit', CH.next.slug); } catch (e) {}
-      setTimeout(function () { location.href = CH.next.href; }, 620);
+      setTimeout(function () { location.href = CH.next.href; }, 980);
     } else {
       try { sessionStorage.setItem('rein-transit', CH.next.slug); } catch (e) {}
       setTimeout(function () { location.href = CH.next.href; }, 260);
@@ -191,12 +195,19 @@
       return;
     }
     paintTransit({ n: CH.n, title: CH.title, accent: CH.accent });
+    /* The ring already drew on the outgoing page. Hold it finished — do not
+       replay it — then wipe the field off. .done keeps that state once
+       data-transit is released. */
+    transit.classList.add('done');
     setTimeout(function () {
       root.removeAttribute('data-transit');   /* releases transition:none */
       transit.classList.add('leave');
       done();
-      setTimeout(function () { transit.classList.remove('leave'); }, 820);
-    }, 260);
+      setTimeout(function () {
+        transit.classList.remove('leave');
+        transit.classList.remove('done');
+      }, 820);
+    }, 520);
   }
   var goBtns = document.querySelectorAll('[data-go-next]');
   for (var i = 0; i < goBtns.length; i++) {

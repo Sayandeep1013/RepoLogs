@@ -61,6 +61,7 @@
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;height:100%;overflow:hidden}
+html{background:var(--ground)}
 body{
   background:var(--ground);color:var(--ink);
   font-family:var(--body);font-size:15px;line-height:1.55;
@@ -387,68 +388,81 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
 .rv.in{opacity:1;transform:none;transition:opacity .8s var(--ease),transform 1s var(--ease)}
 
 /* ============================ LOADERS ============================ */
-/* Loaders use mono at display scale — a different register from the rest of
-   the site, and the one that matches what most of this work actually is. */
+/* The intro loader wears the site's own clothes — same ground, same ink, same
+   hairlines — so arriving at chapter 01 is a continuation, not a cut. The
+   accent is used as an accent. The wordmark is the one place a display serif
+   appears: a title page, not a splash screen. */
 .loader{
-  position:fixed;inset:0;z-index:2000;background:var(--accent);color:var(--on-accent);
+  position:fixed;inset:0;z-index:2000;background:var(--ground);color:var(--ink);
   display:grid;place-items:center;overflow:hidden;
 }
-.loader.out{transform:translateX(-100%);transition:transform 1s var(--ease)}
-.crops{position:absolute;inset:clamp(18px,3.2vw,40px);pointer-events:none}
+.loader.out{opacity:0;transform:translateY(-16px);
+  transition:opacity .7s var(--ease),transform .9s var(--ease)}
+/* echoes the rail on every other page */
+.loader::before{
+  content:"";position:absolute;left:var(--rail);top:0;bottom:0;width:1px;
+  background:var(--rule);opacity:0;transition:opacity .8s .25s;
+}
+.loader.lit::before{opacity:1}
+
+.crops{position:absolute;inset:clamp(18px,3.2vw,40px);pointer-events:none;color:var(--rule-2)}
 .crop{position:absolute;width:26px;height:26px;overflow:visible}
 .crop--tl{left:0;top:0}
 .crop--tr{right:0;top:0;transform:scaleX(-1)}
 .crop--bl{left:0;bottom:0;transform:scaleY(-1)}
 .crop--br{right:0;bottom:0;transform:scale(-1)}
-.crop .c{fill:none;stroke:currentColor;stroke-width:1;vector-effect:non-scaling-stroke;opacity:.55;
+.crop .c{fill:none;stroke:currentColor;stroke-width:1;vector-effect:non-scaling-stroke;
   stroke-dasharray:12;stroke-dashoffset:12;transition:stroke-dashoffset .8s ease-out .2s}
 .loader.lit .crop .c{stroke-dashoffset:0}
 
-.loader__inner{display:flex;flex-direction:column;gap:26px;align-items:flex-start;
+.loader__inner{display:flex;flex-direction:column;gap:24px;align-items:flex-start;
   padding:0 clamp(24px,6vw,80px)}
 .wordmark{
-  font-family:var(--mono);font-weight:600;letter-spacing:.02em;
-  font-size:clamp(2rem,5.6vw,4.2rem);display:flex;align-items:center;line-height:1;
+  font-family:'Instrument Serif',Georgia,'Times New Roman',serif;font-weight:400;
+  letter-spacing:-.01em;font-size:clamp(2.6rem,7.4vw,5.6rem);
+  display:flex;align-items:center;line-height:1;color:var(--ink);
   opacity:0;transform:translateY(12px);
 }
-.loader.lit .wordmark{opacity:1;transform:none;transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.loader.lit .wordmark{opacity:1;transform:none;transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .wordmark__a,.wordmark__b{display:block}
 .dwin{
-  height:1.62em;width:auto;display:block;margin:0 .04em;flex:0 0 auto;
-  transform:scaleY(.42);transform-origin:center;opacity:0;
-  transition:transform .8s var(--ease) .3s,opacity .5s .3s;
+  /* deliberately larger than the cap height — a versal, the way a monograph
+     sets an opening initial, and it gives the media inside room to read */
+  height:1.2em;width:auto;display:block;margin:0 .03em -.07em;flex:0 0 auto;
+  transform:scaleY(.4);transform-origin:center;opacity:0;
+  transition:transform .85s var(--ease) .28s,opacity .5s .28s;
 }
 .loader.lit .dwin{transform:none;opacity:1}
-.dwin__edge{fill:none;stroke:currentColor;stroke-width:2.4;vector-effect:non-scaling-stroke}
-.dwin__media image{opacity:0;transition:opacity .35s}
+.dwin__edge{fill:none;stroke:var(--accent);stroke-width:1.4;vector-effect:non-scaling-stroke}
+.dwin__media image{opacity:0;transition:opacity .4s}
 .dwin__media image.on{opacity:1}
 
 .loader__meta{
-  display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:11px;
-  letter-spacing:.14em;text-transform:uppercase;opacity:0;
+  display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);opacity:0;
 }
-.loader.lit .loader__meta{opacity:.82;transition:opacity .7s .45s}
-.loader__rule{width:64px;height:1px;background:currentColor;opacity:.45;display:block;flex:0 0 auto}
+.loader.lit .loader__meta{opacity:1;transition:opacity .7s .45s}
+.loader__rule{width:64px;height:1px;background:var(--rule-2);display:block;flex:0 0 auto}
 .loader__ticks{display:flex;gap:7px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;
-  letter-spacing:.1em;opacity:0}
-.loader.lit .loader__ticks{opacity:.5;transition:opacity .7s .6s}
-.loader__tick{transition:opacity .3s}
-.loader__tick.done{opacity:.3}
+  letter-spacing:.1em;color:var(--rule-2);opacity:0}
+.loader.lit .loader__ticks{opacity:1;transition:opacity .7s .6s}
+.loader__tick{transition:color .3s}
+.loader__tick.done{color:var(--accent)}
 .loader__count{
   position:absolute;right:clamp(28px,4vw,56px);bottom:clamp(26px,4vw,52px);
-  font-family:var(--mono);font-size:11px;letter-spacing:.12em;display:flex;gap:6px;align-items:baseline;opacity:0;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--ink-2);
+  display:flex;gap:6px;align-items:baseline;opacity:0;
 }
-.loader.lit .loader__count{opacity:.85;transition:opacity .7s .5s}
-.loader__count b{font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums}
-.loader__count span{opacity:.6}
+.loader.lit .loader__count{opacity:1;transition:opacity .7s .5s}
+.loader__count b{font-size:1.45rem;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums}
 .loader__skip{
-  position:absolute;left:clamp(28px,4vw,56px);bottom:clamp(26px,4vw,52px);
+  position:absolute;left:calc(var(--rail) + clamp(20px,3vw,40px));bottom:clamp(26px,4vw,52px);
   font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-  background:none;border:1px solid currentColor;color:inherit;padding:8px 14px;cursor:pointer;
-  opacity:0;border-radius:2px;
+  background:none;border:1px solid var(--rule-2);color:var(--ink-2);padding:8px 14px;cursor:pointer;
+  opacity:0;border-radius:2px;transition:border-color .18s,color .18s;
 }
-.loader.lit .loader__skip{opacity:.7;transition:opacity .7s .8s}
-.loader__skip:hover{opacity:1}
+.loader.lit .loader__skip{opacity:1;transition:opacity .7s .8s}
+.loader__skip:hover{border-color:var(--hover);color:var(--hover)}
 
 /* ---- between chapters ---- */
 .transit{
@@ -459,17 +473,36 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
 }
 .transit.cover{transform:none;visibility:visible;transition:transform .5s var(--ease)}
 /* Arriving mid-transition: the overlay must already BE covering, with no
-   transition, or it slides in a second time and you see the loader twice. */
+   transition, or it slides in a second time and you see the loader twice.
+   The ring and text are pinned to their finished state for the same reason —
+   the ring was drawn on the way out, so it must not draw again on the way in.
+   .done carries that state past the moment data-transit is released. */
 :root[data-transit] .transit{transform:none;visibility:visible;transition:none}
+:root[data-transit] .transit__num .ring path,
+.transit.done .transit__num .ring path{stroke-dashoffset:0;transition:none}
+:root[data-transit] .transit__num b, .transit.done .transit__num b,
+:root[data-transit] .transit__t,     .transit.done .transit__t{opacity:1;transform:none;transition:none}
+:root[data-transit] .transit__k,     .transit.done .transit__k{opacity:.75;transform:none;transition:none}
 .transit.leave{transform:translateX(-100%);visibility:visible;transition:transform .72s var(--ease)}
 .transit__in{display:flex;align-items:center;gap:24px}
 .transit__num{position:relative;width:96px;height:92px;display:grid;place-items:center;flex:0 0 auto}
 .transit__num .ring{position:absolute;inset:0;width:100%;height:100%}
-.transit__num .ring path{fill:none;stroke:currentColor;stroke-width:1.4;vector-effect:non-scaling-stroke}
-.transit__num b{position:relative;font-family:var(--mono);font-weight:600;font-size:2rem;line-height:1}
-.transit__meta{display:flex;flex-direction:column;gap:5px}
+.transit__num .ring path{
+  fill:none;stroke:currentColor;stroke-width:1.4;vector-effect:non-scaling-stroke;
+  stroke-dasharray:330;stroke-dashoffset:330;
+}
+.transit__num b{position:relative;font-family:var(--mono);font-weight:600;font-size:2rem;line-height:1;
+  opacity:0;transform:scale(.9)}
+.transit__meta{display:flex;flex-direction:column;gap:5px;overflow:hidden}
 .transit__k{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.75}
 .transit__t{font-family:var(--mono);font-weight:600;font-size:clamp(1.3rem,3vw,2.1rem);letter-spacing:.01em}
+.transit__k,.transit__t{opacity:0;transform:translateY(10px)}
+/* the ring draws itself, then the numeral and title rise — the same gesture as
+   the arrow ring at the end of a chapter, so the overlay never just appears */
+.transit.draw .transit__num .ring path{stroke-dashoffset:0;transition:stroke-dashoffset 1s ease-out .1s}
+.transit.draw .transit__num b{opacity:1;transform:none;transition:opacity .45s var(--ease) .42s,transform .5s var(--ease) .42s}
+.transit.draw .transit__k{opacity:.75;transform:none;transition:opacity .5s var(--ease) .3s,transform .55s var(--ease) .3s}
+.transit.draw .transit__t{opacity:1;transform:none;transition:opacity .5s var(--ease) .4s,transform .55s var(--ease) .4s}
 
 /* ============================ TRANSITIONS ============================ */
 .stage.leaving .track{transition:transform 1s var(--ease)}
