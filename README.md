@@ -169,7 +169,7 @@ it, and nothing is stuck once you pass it.
 - **Icon-button rings and the constraint leader** stay one-shot on reveal, since they sit beside text that would be distracting if it flickered.
 
 Anything already on screen at load has nothing to scroll into, so the whole
-system ramps up once over 1.5s on arrival; off-screen elements sit at zero
+system ramps up once over 1.1s on arrival; off-screen elements sit at zero
 regardless, so that only shows where it should.
 
 ---

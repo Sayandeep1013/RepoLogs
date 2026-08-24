@@ -230,10 +230,13 @@
   }
   function initLinked() {
     linked = []; linkedPanels = [];
+    /* [selector, from, to, totalStagger] — all in units of panel progress.
+       `to + totalStagger` must stay well under 1 or the last elements never
+       finish drawing before the panel has left the screen. */
     var groups = [
-      ['.diagram .d:not(.dash)', 0.12, 0.66, 0.055],  /* [sel, from, to, stagger] */
-      ['.shot__ghost .g', 0.14, 0.62, 0],
-      ['.tc__num .ring path', 0.10, 0.55, 0],
+      ['.diagram .d:not(.dash)', 0.18, 0.46, 0.10],
+      ['.shot__ghost .g', 0.20, 0.46, 0],
+      ['.tc__num .ring path', 0.14, 0.40, 0],
     ];
     groups.forEach(function (g) {
       var els = document.querySelectorAll(g[0]);
@@ -260,7 +263,7 @@
         var grp = panelGroup(panel);
         linked.push({
           el: el, group: grp, len: len, last: -1,
-          from: g[1], to: g[2], delay: Math.min(i, 22) * g[3],
+          from: g[1], to: g[2], delay: els.length > 1 ? (i / (els.length - 1)) * g[3] : 0,
         });
       }
     });
@@ -273,7 +276,7 @@
   function driveLinked() {
     if (reduce) return;
     if (!introFrom) introFrom = performance.now();
-    var ramp = Math.min(1, (performance.now() - introFrom) / 1500);
+    var ramp = Math.min(1, (performance.now() - introFrom) / 1100);
     ramp = 1 - Math.pow(1 - ramp, 3);        /* ease out */
     var vw = stage.clientWidth;
     /* a diagram is ~30 paths in one panel — read each panel's rect once */
@@ -375,7 +378,7 @@
         var c = en.target.querySelector('[data-custom]');
         if (c && !revealed.has(c)) { revealed.add(c); bootCustom(c); }
       });
-    }, { root: stage, rootMargin: '0px -14% 0px -14%', threshold: 0.01 });
+    }, { root: stage, rootMargin: '0px -6% 0px -6%', threshold: 0.01 });
     for (var j = 0; j < items.length; j++) io.observe(items[j]);
   }
 
