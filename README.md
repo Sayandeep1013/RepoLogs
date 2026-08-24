@@ -140,6 +140,18 @@ Sampled from each project's own screenshots, then corrected for contrast. A sing
 
 ---
 
+### Themes
+
+Three, cycled from the rail, which labels the current one: **paper** (a true
+light, `#F0EDE7`), **concrete** (ikony's grey) and **dark**. The site always
+opens on concrete — a dark desktop should not decide how a first impression
+looks — so dark is opt-in only. The choice persists in `localStorage`.
+
+Every accent clears WCAG AA against all three grounds, and `hover` carries its
+own value per theme because a single orange cannot.
+
+---
+
 ## Loaders and line work
 
 The **intro loader** wears the site's own clothes — the same ground, ink and hairlines, with the accent used as an accent — so arriving at chapter 01 is a continuation rather than a cut. The wordmark is the one place a display serif appears (Instrument Serif): a title page, not a splash screen. The **D of .DEV is a window** — a slab-serif letterform set as a versal, larger than the cap height, with project screenshots cycling inside it, clipped to its outline. Registration marks draw in at the corners, a counter and a row of chapter ticks show real preload progress. Once per session, skippable by any input.
