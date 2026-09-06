@@ -104,9 +104,14 @@ export function frieze(slug, units, cls = 'frieze') {
   </svg>`;
 }
 
-/* the wordmark — REIN.DEV as type, with the site's irregular ring
-   drawing on beside it, the same gesture as the chapter transit */
+/* the wordmark — REIN.DEV as type, play sitting inside the irregular
+   ring the way a chapter numeral does. The triangle is the enter mark. */
+const PLAY_D = 'M44 34 L78 53 L44 72 Z';
+
 export const wordmark = () =>
-  `<span class="wordmark"><span class="wordmark__mark">${ring(
-    'wordmark__ring'
-  )}</span><span class="wordmark__text">REIN.DEV</span></span>`;
+  `<button class="wordmark" type="button" aria-label="Begin">
+    <span class="wordmark__mark">${ring('wordmark__ring')}
+      <svg class="wordmark__play" viewBox="0 0 110 106" aria-hidden="true"><path d="${PLAY_D}"/></svg>
+    </span>
+    <span class="wordmark__text">REIN.DEV</span>
+  </button>`;

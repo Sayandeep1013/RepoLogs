@@ -337,6 +337,7 @@ ${main}
 }
 
 function loaderMarkup() {
+  const first = chapters[0];
   const ticks = chapters
     .map((c) => `<span class="loader__tick" data-n="${c.n}">${ring()}<b>${c.n}</b></span>`)
     .join('');
@@ -350,6 +351,14 @@ function loaderMarkup() {
       <span>${esc(SITE.tagline.toLowerCase())}</span>
     </div>
     <div class="loader__ticks">${ticks}</div>
+    <div class="loader__go">
+      ${iconBtn('play', 'Begin chapter ' + first.title)}
+      <span class="loader__go-copy">
+        <span class="loader__go-k">Chapter ${first.n}</span>
+        <span class="loader__go-t">${esc(first.title)}</span>
+      </span>
+      <span class="loader__go-lab">begin</span>
+    </div>
   </div>
   ${frieze('intro', 42, 'loader__frieze')}
   <div class="loader__count"><b>00</b><span>/ 100</span></div>

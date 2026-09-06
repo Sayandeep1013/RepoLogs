@@ -385,8 +385,8 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
 /* ============================ LOADERS ============================ */
 /* The intro loader wears the site's own clothes — same ground, same ink, same
    hairlines — so arriving at chapter 01 is a continuation, not a cut. The
-   accent is used as an accent. The wordmark is type plus a hairline that
-   draws on, the same gesture as crop marks and diagrams. */
+   accent is used as an accent. The wordmark sits beside the irregular ring
+   with the play mark inside it; a begin row below reuses the chapter handoff. */
 .loader{
   position:fixed;inset:0;z-index:2000;background:var(--ground);color:var(--ink);
   display:grid;place-items:center;overflow:hidden;
@@ -417,13 +417,19 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
   letter-spacing:-.01em;font-size:clamp(2.6rem,7.4vw,5.6rem);
   display:flex;align-items:center;gap:clamp(14px,2.4vw,28px);line-height:1;color:var(--ink);
   opacity:0;transform:translateY(12px);
+  background:none;border:0;padding:0;cursor:pointer;text-align:left;
 }
 .loader.lit .wordmark{opacity:1;transform:none;transition:opacity .9s var(--ease),transform .9s var(--ease)}
-.wordmark__mark{position:relative;width:clamp(56px,8vw,80px);height:clamp(54px,7.7vw,77px);flex:0 0 auto}
-.wordmark__ring{position:absolute;inset:0;width:100%;height:100%}
+.wordmark__mark{position:relative;width:clamp(64px,9vw,92px);height:clamp(62px,8.7vw,89px);flex:0 0 auto}
+.wordmark__ring,.wordmark__play{position:absolute;inset:0;width:100%;height:100%}
 .wordmark__ring path{fill:none;stroke:var(--accent);stroke-width:1.4;vector-effect:non-scaling-stroke;
   stroke-dasharray:330;stroke-dashoffset:330}
 .loader.lit .wordmark__ring path{stroke-dashoffset:0;transition:stroke-dashoffset 1.2s ease-out .12s}
+.wordmark__play path{fill:var(--ink);opacity:0;transform:scale(.86);transform-origin:center}
+.loader.lit .wordmark__play path{opacity:1;transform:none;
+  transition:opacity .45s var(--ease) .7s,transform .5s var(--ease) .7s,fill .18s}
+.wordmark:hover .wordmark__play path{fill:var(--hover)}
+.wordmark:hover .wordmark__ring path{stroke:var(--hover)}
 .wordmark__text{display:block}
 
 .loader__meta{
@@ -443,6 +449,22 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
 .loader__tick.done{color:var(--on-accent)}
 .loader__tick.done .ring path{stroke-dashoffset:0;stroke:var(--accent);fill:var(--accent);
   transition:stroke-dashoffset .45s ease-out,fill .25s .15s,stroke .25s}
+.loader__go{
+  display:flex;align-items:center;gap:14px;margin-top:6px;color:var(--ink);
+  opacity:0;transform:translateY(8px);
+}
+.loader.lit .loader__go{opacity:1;transform:none;transition:opacity .7s var(--ease) .75s,transform .8s var(--ease) .75s}
+.loader__go-copy{display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+.loader__go-k{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
+.loader__go-t{font-family:var(--display);font-weight:800;font-size:clamp(1.15rem,2vw,1.55rem);
+  letter-spacing:-.02em;text-transform:uppercase}
+.loader__go-lab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.loader__go:hover{color:var(--hover)}
+.loader__go:hover .loader__go-lab,.loader__go:hover .loader__go-k{color:var(--hover)}
+.loader .icon-btn path.o{stroke-dashoffset:160}
+.loader.lit .icon-btn path.o{stroke-dashoffset:0;transition:stroke-dashoffset 1.2s ease-out .7s}
+.loader .icon-btn path.g{opacity:0}
+.loader.lit .icon-btn path.g{opacity:1;transition:opacity .45s ease-out 1.05s,fill .18s,stroke .18s}
 .loader__count{
   position:absolute;right:clamp(28px,4vw,56px);bottom:clamp(26px,4vw,52px);
   font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--ink-2);
@@ -771,7 +793,8 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
   .rv{opacity:1;transform:none}
   .diagram .d{stroke-dashoffset:0}
   .diagram .t{opacity:1}
-  .wordmark__ring path,.loader__tick .ring path{stroke-dashoffset:0}
+  .wordmark__ring path,.loader__tick .ring path,.loader .icon-btn path.o{stroke-dashoffset:0}
+  .wordmark__play path,.loader .icon-btn path.g{opacity:1;transform:none}
 }
 :focus-visible{outline:2px solid var(--hover);outline-offset:3px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
