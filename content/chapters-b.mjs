@@ -231,4 +231,191 @@ export const chaptersB = [
       { type: 'handoff', cols: 6 },
     ],
   },
+
+  /* ══════════════════════════ DISCREC ══════════════════════════ */
+  {
+    slug: 'discrec',
+    repo: 'DiscRec',
+    title: 'DiscRec',
+    kicker: 'One job, one binary',
+    accent: { light: '#0A5470', dark: '#3DB8D4' },
+    langs: ['Rust'],
+    topics: ['audio', 'discord', 'native', 'windows'],
+    pitch:
+      'Records Discord’s audio. Open it, press record, get one file. The Windows release is under 1 MB.',
+    constraint: {
+      q: 'OBS can already capture Discord. Why does this exist?',
+      a: 'Because OBS is a 200 MB video suite you configure before it records anything. DiscRec is that one job as one button in one binary.',
+    },
+    panels: [
+      { type: 'title' },
+      { type: 'constraint' },
+      {
+        type: 'custom',
+        id: 'record',
+        cols: 13,
+        label: 'A session',
+        note: 'Find Discord, mix two clocks, write one Ogg. Replayed from the documented pipeline.',
+      },
+      {
+        type: 'diagram',
+        id: 'discrec',
+        cols: 13,
+        label: 'Four parts, one of them platform-specific',
+        caption:
+          'Everything except the capture backend is shared. The Mac contributor writes one file against an existing trait.',
+      },
+      {
+        type: 'code',
+        cols: 8,
+        label: 'The only platform conditional',
+        lang: 'rust',
+        body: `pub struct Frame {
+    pub source: Source,     // Discord | mic
+    pub sample_pos: u64,    // this stream's clock
+    pub samples: Vec<f32>,
+}
+
+pub trait CaptureBackend: Send {
+    fn start(&mut self, discord_pid: u32,
+             sink: FrameSink) -> Result<()>;
+    fn stop(&mut self) -> Result<()>;
+}`,
+        caption:
+          'WASAPI process loopback on Windows, a Core Audio process tap on macOS. If anything else needs a cfg, that is a design smell.',
+      },
+      {
+        type: 'note',
+        cols: 7,
+        heading: 'The hard part is two clocks',
+        body: [
+          'Discord’s output and the microphone arrive as independently clocked streams. Drift compensation happens in the mixer, before summing, using each stream’s own sample position rather than wall-clock arrival.',
+          'A limiter sits after the sum, because two sources added together clip. Pages of Opus in Ogg are committed as they are made, so a crash still leaves a playable file.',
+        ],
+      },
+      {
+        type: 'note',
+        cols: 6,
+        heading: 'What it deliberately does not do',
+        body: [
+          'Auto-start, per-person tracks, video, transcription, cloud, mobile. Each was considered and cut. First launch reminds you that everyone in the call is being recorded — Discord’s Terms require you to tell them; the app cannot say it for you.',
+        ],
+      },
+      {
+        type: 'note',
+        cols: 7,
+        heading: 'Status, honestly',
+        tone: 'flag',
+        body: [
+          'The Windows app works; download the exe from Releases. macOS is in the tree — clone and run the script on 14.2+ — not a packaged download.',
+          'Two measurements are still outstanding, not missing features: a four-hour drift soak, and release CPU against a 3% budget.',
+        ],
+      },
+      { type: 'outcome', cols: 5 },
+      { type: 'handoff', cols: 6 },
+    ],
+  },
+
+  /* ══════════════════════════ TOMEVOICE ══════════════════════════ */
+  {
+    slug: 'tomevoice',
+    repo: 'TomeVoice',
+    title: 'TomeVoice',
+    kicker: 'A reader that owns the audio',
+    accent: { light: '#6B3A18', dark: '#E0A86A' },
+    langs: ['Dart'],
+    topics: ['tts', 'ebook-reader', 'epub', 'offline-first'],
+    pitch:
+      'A document reader with a serious text-to-speech engine — Android and Windows — that controls the gap between words.',
+    constraint: {
+      q: 'No TTS engine on either platform can control the gap between words. Now what?',
+      a: 'You never call speak(). You synthesise to PCM, take the timings, and run your own player, scheduler and DSP chain. That one requirement is most of the architecture.',
+    },
+    panels: [
+      { type: 'title' },
+      { type: 'constraint' },
+      {
+        type: 'custom',
+        id: 'voice',
+        cols: 13,
+        label: 'A sentence, spoken',
+        note: 'Word-gap injection on derived timings. Replayed from the documented audio pipeline.',
+      },
+      {
+        type: 'diagram',
+        id: 'tomevoice',
+        cols: 14,
+        label: 'Two contracts',
+        caption:
+          'Every format becomes one document model. Every engine returns PCM plus word timings. Neither side knows what a PDF is.',
+      },
+      {
+        type: 'code',
+        cols: 9,
+        label: 'Contract B — never speak()',
+        lang: 'text',
+        body: `SynthesisResult
+  pcm            mono samples
+  wordTimings    char range → frame range
+  source         engineReported
+                 | modelDurations
+                 | aligned
+                 | estimated
+
+pipeline, in order
+  1  edge trim
+  2  time stretch
+  3  word-gap injection
+  4  punctuation pauses
+  5  sentence pause
+  6  gain
+
+highlighting reads the
+post-processed timings.`,
+        caption:
+          'Stage order is load-bearing. Stretch after the gaps and the gaps stretch too. Estimated timings are labelled, and the UI falls back to the sentence rather than highlighting the wrong word.',
+      },
+      {
+        type: 'note',
+        cols: 7,
+        heading: 'The hard part',
+        body: [
+          'Neural voices return no word timings — only samples. Highlighting and gap injection both depend on them, so they are derived in stages and honestly labelled. System voices hand timings over for free.',
+          'The best-sounding open model is too heavy for cheap phones. Kokoro is device-gated and never the default. PDF is not a text format: reconstructing reading order from glyph positions is the largest cost in the document pipeline, and it is never perfect, so the product lets users correct it.',
+        ],
+      },
+      {
+        type: 'note',
+        cols: 6,
+        heading: 'Licence as architecture',
+        body: [
+          'GPL-3.0 was not a formality. eSpeak-NG, Piper’s engine and the best pitch/time library are all GPL. Matching their licence turned three blockers into ordinary dependencies.',
+        ],
+      },
+      {
+        type: 'note',
+        cols: 7,
+        heading: 'Status, honestly',
+        tone: 'flag',
+        body: [
+          'You can use it. The audio-engine spike is proven on a real device. The app opens EPUB, TXT and Markdown from the library and reads them aloud sentence by sentence, with the same word-gap, pause and speed controls.',
+          'APKs still come from CI — there is no local Flutter install. DRM-protected books are permanently out of scope.',
+        ],
+      },
+      {
+        type: 'stat',
+        cols: 6,
+        label: 'The surface',
+        items: [
+          ['2', 'platforms'],
+          ['GPL-3.0', 'licence'],
+          ['PCM', 'never speak()'],
+          ['0', 'accounts'],
+        ],
+        caption: 'Android APK with the screen off; a Windows exe with media keys. Nothing leaves the device.',
+      },
+      { type: 'outcome', cols: 5 },
+      { type: 'handoff', cols: 6 },
+    ],
+  },
 ];

@@ -13,7 +13,7 @@ export const SITE = {
   repo: 'RepoLogs',
   live: 'https://sayandeep1013.github.io/RepoLogs/',
   blurb:
-    'Twelve projects that each take a surface which is not supposed to do the job, and make it do the job anyway.',
+    'Fourteen projects that each take a surface which is not supposed to do the job, and make it do the job anyway.',
 };
 
 import { chaptersB } from './chapters-b.mjs';
@@ -582,9 +582,10 @@ await page.addInitScript(() => {
    site is a one-line change and the labels can never drift out of sync. */
 const ORDER = [
   'reelshell', 'termtypo',                    // the terminal is a real surface
-  'discvault',                                // a platform limit is a block size
+  'discvault', 'discrec',                     // a platform limit / one Discord job
   'rein-bot', 'ftc-game', 'solidus-bingo',    // realtime multiplayer on free tiers
   'co-canvas', 'tessera', 'notetakerxx',      // the document is the interesting object
+  'tomevoice',                                // the document, spoken
   'valobot', 'droiddoodle',                   // grounded, or local
   'martini',                                  // reading a closed system
 ];

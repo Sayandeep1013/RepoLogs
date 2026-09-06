@@ -436,41 +436,41 @@
       return;
     }
 
-    /* fill the D with cycling project frames */
-    var media = loader.querySelector('.dwin__media');
-    var frames = (CH.loaderFrames || []).slice(0, 8);
-    var NS = 'http://www.w3.org/2000/svg';
-    var imgs = frames.map(function (src) {
-      var im = document.createElementNS(NS, 'image');
-      im.setAttribute('href', src);
-      im.setAttribute('x', '0'); im.setAttribute('y', '0');
-      im.setAttribute('width', '124'); im.setAttribute('height', '130');
-      im.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-      media.appendChild(im);
-      var pre = new Image(); pre.src = src;   /* warm the cache */
-      return im;
-    });
-
     requestAnimationFrame(function () { loader.classList.add('lit'); });
 
-    var idx = 0, cycler = null;
-    if (imgs.length) {
-      imgs[0].classList.add('on');
-      cycler = setInterval(function () {
-        idx++;
-        imgs.forEach(function (im, i) { im.classList.toggle('on', i === idx % imgs.length); });
-      }, 620);
-    }
-
-    /* progress counter + chapter ticks */
+    /* progress counter + chapter ticks + the intro frieze, drawn
+       the same way a chapter frieze is — dash offset as a function of p */
     var countEl = loader.querySelector('.loader__count b');
     var ticks = [].slice.call(loader.querySelectorAll('.loader__tick'));
+    var fsvg = loader.querySelector('.loader__frieze');
+    var fpaths = [];
+    if (fsvg) {
+      var vb = fsvg.viewBox && fsvg.viewBox.baseVal;
+      var box = fsvg.getBoundingClientRect();
+      var scale = vb && vb.width && box.width ? box.width / vb.width : 1;
+      fpaths = [].slice.call(fsvg.querySelectorAll('path')).map(function (el) {
+        var len = 0;
+        try { len = el.getTotalLength(); } catch (e) { len = 0; }
+        len = Math.ceil((len || 800) * scale * 1.06) + 8;
+        el.style.strokeDasharray = len;
+        el.style.strokeDashoffset = reduce ? 0 : len;
+        return { el: el, len: len, last: -1 };
+      });
+    }
+    function paintFrieze(p) {
+      for (var i = 0; i < fpaths.length; i++) {
+        var fp = fpaths[i];
+        var off = Math.round(fp.len * (1 - p));
+        if (off !== fp.last) { fp.el.style.strokeDashoffset = off; fp.last = off; }
+      }
+    }
     var t0 = performance.now(), DUR = 5200, raf = null;
     (function tick() {
       var p = Math.min(1, (performance.now() - t0) / DUR);
       if (countEl) countEl.textContent = String(Math.round(p * 100)).padStart(2, '0');
       var k = Math.floor(p * ticks.length);
       ticks.forEach(function (el, i) { el.classList.toggle('done', i < k); });
+      paintFrieze(p);
       if (p < 1) raf = requestAnimationFrame(tick);
     })();
 
@@ -478,10 +478,10 @@
     function finish() {
       if (done) return;
       done = true;
-      if (cycler) clearInterval(cycler);
       if (raf) cancelAnimationFrame(raf);
       if (countEl) countEl.textContent = '100';
       ticks.forEach(function (el) { el.classList.add('done'); });
+      paintFrieze(1);
       try { sessionStorage.setItem('rein-seen', '1'); } catch (e) {}
       loader.classList.add('out');
       setTimeout(function () { loader.remove(); }, 1050);

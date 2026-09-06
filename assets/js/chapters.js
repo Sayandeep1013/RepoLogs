@@ -663,4 +663,109 @@
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }, 0);
   };
+
+  /* ═════════════ DiscRec — a session ═════════════ */
+  C.record = function (host) {
+    var SCRIPT = [
+      { at: 280, status: 'find Discord · stable client · pid 18420' },
+      { at: 1100, rec: true, status: 'record · WASAPI loopback + default mic' },
+      { at: 5200, status: 'mix · two clocks · limiter on the sum' },
+      { at: 6400, file: true, status: 'write · Opus in Ogg · page committed' },
+      { at: 7800, status: 'Downloads/DiscRec/session.ogg · playable if we crash' },
+      { at: 10200, reset: true },
+    ];
+    host.innerHTML = '';
+    var w = el('div', 'rec');
+    var top = el('div', 'rec__top');
+    var lamp = el('span', 'rec__lamp');
+    top.appendChild(lamp);
+    top.appendChild(el('span', 'rec__lab', 'DiscRec'));
+    top.appendChild(el('span', 'rec__time', '00:00'));
+    w.appendChild(top);
+
+    function meter(name) {
+      var row = el('div', 'rec__meter');
+      row.appendChild(el('span', 'rec__who', name));
+      var bar = el('div', 'rec__bar');
+      bar.appendChild(el('i'));
+      row.appendChild(bar);
+      w.appendChild(row);
+      return bar.querySelector('i');
+    }
+    var disc = meter('discord');
+    var mic = meter('mic');
+    var file = el('div', 'rec__file');
+    file.appendChild(el('span', 'k', 'file'));
+    file.appendChild(el('span', 'v', 'session.ogg'));
+    w.appendChild(file);
+    var status = el('div', 'rec__status');
+    w.appendChild(status);
+    host.appendChild(w);
+
+    var t0 = null, done = -1, recOn = false, fileOn = false;
+    loop(host, function (t) {
+      if (t0 === null) t0 = t;
+      var e = (t - t0) % 11500;
+      if (e < 80) { done = -1; recOn = false; fileOn = false; }
+      for (var i = 0; i < SCRIPT.length; i++) {
+        if (i <= done) continue;
+        var s = SCRIPT[i];
+        if (e < s.at) break;
+        done = i;
+        if (s.reset) { recOn = false; fileOn = false; status.textContent = ''; continue; }
+        if (s.rec) recOn = true;
+        if (s.file) fileOn = true;
+        if (s.status) status.textContent = s.status;
+      }
+      lamp.classList.toggle('on', recOn);
+      file.classList.toggle('on', fileOn);
+      var secs = recOn ? Math.min(99, Math.floor((e - 1100) / 1000)) : 0;
+      top.querySelector('.rec__time').textContent = '00:' + String(Math.max(0, secs)).padStart(2, '0');
+      var pulse = recOn ? 0.35 + Math.abs(Math.sin(t / 180)) * 0.55 : 0.06;
+      var pulse2 = recOn ? 0.22 + Math.abs(Math.sin(t / 230 + 1.2)) * 0.4 : 0.06;
+      disc.style.width = (pulse * 100) + '%';
+      mic.style.width = (pulse2 * 100) + '%';
+    });
+  };
+
+  /* ═════════════ TomeVoice — a sentence, spoken ═════════════ */
+  C.voice = function (host) {
+    var WORDS = ['The', 'gap', 'between', 'words', 'is', 'not', 'a', 'pause', 'the', 'engine', 'will', 'give', 'you.'];
+    host.innerHTML = '';
+    var w = el('div', 'voice');
+    var line = el('div', 'voice__line');
+    var nodes = WORDS.map(function (word) {
+      var wrap = el('span', 'voice__w');
+      wrap.appendChild(el('b', '', word));
+      var gap = el('i', 'voice__gap');
+      wrap.appendChild(gap);
+      line.appendChild(wrap);
+      return wrap;
+    });
+    w.appendChild(line);
+    var meta = el('div', 'voice__meta');
+    w.appendChild(meta);
+    host.appendChild(w);
+
+    var t0 = null;
+    loop(host, function (t) {
+      if (t0 === null) t0 = t;
+      var e = (t - t0) % 11000;
+      var speaking = e > 700 && e < 8200;
+      var idx = speaking ? Math.min(WORDS.length - 1, Math.floor((e - 700) / 520)) : -1;
+      nodes.forEach(function (n, i) {
+        n.classList.toggle('on', i === idx);
+        n.classList.toggle('done', i < idx);
+        n.classList.toggle('gap', speaking && i === idx);
+      });
+      if (!speaking) {
+        meta.textContent = e < 700
+          ? 'synthesise → PCM · timings: estimated'
+          : 'sentence pause · lookahead primed';
+      } else {
+        meta.innerHTML = 'word ' + (idx + 1) + ' / ' + WORDS.length +
+          ' · gap inject <b>80 ms</b> · highlight uses post-process timings';
+      }
+    });
+  };
 })();

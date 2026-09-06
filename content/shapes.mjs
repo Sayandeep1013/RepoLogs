@@ -40,27 +40,6 @@ export const iconBtn = (glyph, label, href = null, cls = '', attrs = '') => {
     : `<button class="icon-btn ${cls}" type="button" aria-label="${label}"${extra}>${inner}</button>`;
 };
 
-/* ------------------------------------------------------------------
-   The D of .DEV, drawn as a letterform and used as a window. Media goes
-   inside the clip; the edges are stroked on top so it still reads as a D.
-   ------------------------------------------------------------------ */
-/* A slab-serif D, to sit with the display serif the loader is set in.
-   The notch on the left of the outer path is what makes the serifs. */
-export const D_OUTER =
-  'M12 12 H66 C95 12 110 34 110 64 C110 94 95 116 66 116 H12 V107 H29 V21 H12 Z';
-export const D_INNER = 'M57 45 H63 C73 45 79 53 79 64 C79 75 73 83 63 83 H57 Z';
-
-export const dWindow = (id = 'dwin') => `<svg class="dwin" viewBox="0 0 124 130" aria-hidden="true">
-  <defs>
-    <clipPath id="${id}" clipPathUnits="userSpaceOnUse">
-      <path d="${D_OUTER} ${D_INNER}" clip-rule="evenodd"/>
-    </clipPath>
-  </defs>
-  <g class="dwin__media" clip-path="url(#${id})"></g>
-  <path class="dwin__edge" d="${D_OUTER}"/>
-  <path class="dwin__edge" d="${D_INNER}"/>
-</svg>`;
-
 /* Printer's registration marks. One small SVG per corner rather than one
    stretched box — a single viewBox scaled to the viewport would give the
    horizontal and vertical arms wildly different lengths. */
@@ -94,7 +73,7 @@ function seeded(str) {
   };
 }
 
-export function frieze(slug, units) {
+export function frieze(slug, units, cls = 'frieze') {
   const rnd = seeded(slug);
   const W = Math.max(240, units * 10);
   const BASE = 104;
@@ -118,15 +97,16 @@ export function frieze(slug, units) {
     d += ` L${x} ${BASE}`;
   }
   d += ` L${W} ${BASE}`;
-  return `<svg class="frieze" viewBox="0 0 ${W} 116" preserveAspectRatio="none" aria-hidden="true">
+  return `<svg class="${cls}" viewBox="0 0 ${W} 116" preserveAspectRatio="none" aria-hidden="true">
     <path class="frieze__line" d="${d}"/>
     ${detail.length ? `<path class="frieze__detail" d="${detail.join(' ')}"/>` : ''}
     <path class="frieze__base" d="M0 ${BASE + 8} H${W}"/>
   </svg>`;
 }
 
-/* the wordmark — REIN.DEV, with the D as the window */
+/* the wordmark — REIN.DEV as type, with the site's irregular ring
+   drawing on beside it, the same gesture as the chapter transit */
 export const wordmark = () =>
-  `<span class="wordmark"><span class="wordmark__a">REIN.</span>${dWindow(
-    'dwin-load'
-  )}<span class="wordmark__b">EV</span></span>`;
+  `<span class="wordmark"><span class="wordmark__mark">${ring(
+    'wordmark__ring'
+  )}</span><span class="wordmark__text">REIN.DEV</span></span>`;

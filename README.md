@@ -1,6 +1,6 @@
 # rein.dev
 
-A horizontally-scrolling portfolio in the manner of [ikony.tv](https://ikony.tv). Twelve chapters, one per repository, each arguing the same thing: **take a surface that is not supposed to do the job, and make it do the job anyway.** A terminal that streams video, a chat app's attachment cap used as a filesystem, a free tier running realtime multiplayer for eight people, a phone running the model itself.
+A horizontally-scrolling portfolio in the manner of [ikony.tv](https://ikony.tv). Fourteen chapters, one per repository, each arguing the same thing: **take a surface that is not supposed to do the job, and make it do the job anyway.** A terminal that streams video, a chat app's attachment cap used as a filesystem, a free tier running realtime multiplayer for eight people, a phone running the model itself.
 
 No framework, no dependencies, no build tooling. `node build.mjs` writes a static `dist/`.
 
@@ -10,7 +10,7 @@ No framework, no dependencies, no build tooling. `node build.mjs` writes a stati
 
 ## Screenshots
 
-| Intro loader — the D of .DEV is a window | Chapter title card |
+| Intro loader — REIN.DEV, hairline drawn on | Chapter title card |
 |---|---|
 | ![Intro loader](screenshots/readme/01-loader.png) | ![Chapter title card](screenshots/readme/02-title-card.png) |
 
@@ -49,22 +49,24 @@ track.style.transform = `translate3d(${-cur}px,0,0)`
 
 ---
 
-## The twelve chapters
+## The fourteen chapters
 
 | # | Chapter | Repo | The constraint it breaks |
 |---|---|---|---|
 | 01 | ReelShell | [ReelShell](https://github.com/Sayandeep1013/ReelShell) | A terminal can be a streaming client |
 | 02 | TermTypo | [TermTypo](https://github.com/Sayandeep1013/TermTypo) | A terminal can be a ranked competitive arena |
 | 03 | DiscVault | [DiscVault](https://github.com/Sayandeep1013/DiscVault) | An attachment cap is a block size |
-| 04 | ReIN Bot | [Rein-Bot](https://github.com/Sayandeep1013/Rein-Bot) | A free tier can host realtime multiplayer |
-| 05 | FTC | [FTC-Game](https://github.com/Sayandeep1013/FTC-Game) | No client decides the outcome |
-| 06 | Solidus | [Solidus-Bingo](https://github.com/Sayandeep1013/Solidus-Bingo) | A sideloaded app can still be updated |
-| 07 | CanVas | [co-canvas](https://github.com/Sayandeep1013/co-canvas) | A URL is the whole account system |
-| 08 | Tessera | [Tessera](https://github.com/Sayandeep1013/Tessera) | A drawing is a document an AI can edit |
-| 09 | NoteTakerXX | [NoteTakerXx](https://github.com/Sayandeep1013/NoteTakerXx) | Notes have coordinates |
-| 10 | ValoBot | [ValoBot](https://github.com/Sayandeep1013/ValoBot) | A model with no cutoff, if it fetches first |
-| 11 | DroidDoodle | [DroidDoodle](https://github.com/Sayandeep1013/DroidDoodle) | A phone runs the model that drives the canvas |
-| 12 | Santioni | [Martini-Recreation](https://github.com/Sayandeep1013/Martini-Recreation) | A closed WebGL system can be read |
+| 04 | DiscRec | [DiscRec](https://github.com/Sayandeep1013/DiscRec) | One Discord job does not need a video suite |
+| 05 | ReIN Bot | [Rein-Bot](https://github.com/Sayandeep1013/Rein-Bot) | A free tier can host realtime multiplayer |
+| 06 | FTC | [FTC-Game](https://github.com/Sayandeep1013/FTC-Game) | No client decides the outcome |
+| 07 | Solidus | [Solidus-Bingo](https://github.com/Sayandeep1013/Solidus-Bingo) | A sideloaded app can still be updated |
+| 08 | CanVas | [co-canvas](https://github.com/Sayandeep1013/co-canvas) | A URL is the whole account system |
+| 09 | Tessera | [Tessera](https://github.com/Sayandeep1013/Tessera) | A drawing is a document an AI can edit |
+| 10 | NoteTakerXX | [NoteTakerXx](https://github.com/Sayandeep1013/NoteTakerXx) | Notes have coordinates |
+| 11 | TomeVoice | [TomeVoice](https://github.com/Sayandeep1013/TomeVoice) | No engine will give you the gap between words |
+| 12 | ValoBot | [ValoBot](https://github.com/Sayandeep1013/ValoBot) | A model with no cutoff, if it fetches first |
+| 13 | DroidDoodle | [DroidDoodle](https://github.com/Sayandeep1013/DroidDoodle) | A phone runs the model that drives the canvas |
+| 14 | Santioni | [Martini-Recreation](https://github.com/Sayandeep1013/Martini-Recreation) | A closed WebGL system can be read |
 
 Reading order lives in `ORDER` in `content/chapters.mjs`. Chapter numbers are derived from it, so re-sequencing is a one-line change and the labels can never drift.
 
@@ -90,15 +92,17 @@ Every chapter runs the same grammar, so you learn it once in 01 and read the res
 | 01 | `tui` | replays browse → search → season → provider fallback → mpv |
 | 02 | `race` | two lanes, live WPM, ELO delta at the line |
 | 03 | `chunks` | scroll-driven: a file splits, chunks land as messages, SHA-256 verifies |
-| 04 | `round` | a 20s round — countdown, guesses graded, near-miss tier revealed |
-| 05 | `trumps` | stat called, cards compared, pile taken |
-| 06 | `bingo` | numbers drawn server-side, board marks, a line completes |
-| 07 | `presence` | two cursors, a document filling and a canvas being drawn, one Yjs doc |
-| 08 | `tessera` | canvas ↔ JSON — hover either side, the other highlights |
-| 09 | `canvas` | notes placed on a dot grid, then linked with rope curves |
-| 10 | `cypher` | two questions — the second fails to ground, and is refused |
-| 11 | `agent` | a sentence in, tool calls stream, nodes snap onto the board |
-| 12 | `shader` | a real WebGL fragment shader — the chapter is about shaders |
+| 04 | `record` | find Discord, two meters, mix two clocks, one Ogg |
+| 05 | `round` | a 20s round — countdown, guesses graded, near-miss tier revealed |
+| 06 | `trumps` | stat called, cards compared, pile taken |
+| 07 | `bingo` | numbers drawn server-side, board marks, a line completes |
+| 08 | `presence` | two cursors, a document filling and a canvas being drawn, one Yjs doc |
+| 09 | `tessera` | canvas ↔ JSON — hover either side, the other highlights |
+| 10 | `canvas` | notes placed on a dot grid, then linked with rope curves |
+| 11 | `voice` | a sentence spoken with word-gap injection on derived timings |
+| 12 | `cypher` | two questions — the second fails to ground, and is refused |
+| 13 | `agent` | a sentence in, tool calls stream, nodes snap onto the board |
+| 14 | `shader` | a real WebGL fragment shader — the chapter is about shaders |
 
 Set pieces are decorative. Nothing in them gates content, and each is wrapped so a failure cannot break the page.
 
@@ -128,15 +132,17 @@ Sampled from each project's own screenshots, then corrected for contrast. A sing
 | 01 | ReelShell | `#086063` | `#12A5AA` |
 | 02 | TermTypo | `#39631D` | `#5C9C32` |
 | 03 | DiscVault | `#1627DF` | `#747EF1` |
-| 04 | ReIN Bot | `#A31F72` | `#DE54AB` |
-| 05 | FTC | `#7F4F0A` | `#C67A10` |
-| 06 | Solidus | `#106534` | `#1BA755` |
-| 07 | CanVas | `#973911` | `#E75D23` |
-| 08 | Tessera | `#125C91` | `#2595E4` |
-| 09 | NoteTakerXX | `#6A570C` | `#A58812` |
-| 10 | ValoBot | `#AB1C40` | `#E4587B` |
-| 11 | DroidDoodle | `#6F22D3` | `#A36EE7` |
-| 12 | Santioni | `#B8241F` | `#E25F5A` |
+| 04 | DiscRec | `#0A5470` | `#3DB8D4` |
+| 05 | ReIN Bot | `#A31F72` | `#DE54AB` |
+| 06 | FTC | `#7F4F0A` | `#C67A10` |
+| 07 | Solidus | `#106534` | `#1BA755` |
+| 08 | CanVas | `#973911` | `#E75D23` |
+| 09 | Tessera | `#125C91` | `#2595E4` |
+| 10 | NoteTakerXX | `#6A570C` | `#A58812` |
+| 11 | TomeVoice | `#6B3A18` | `#E0A86A` |
+| 12 | ValoBot | `#AB1C40` | `#E4587B` |
+| 13 | DroidDoodle | `#6F22D3` | `#A36EE7` |
+| 14 | Santioni | `#B8241F` | `#E25F5A` |
 
 ---
 
@@ -154,7 +160,7 @@ own value per theme because a single orange cannot.
 
 ## Loaders and line work
 
-The **intro loader** wears the site's own clothes — the same ground, ink and hairlines, with the accent used as an accent — so arriving at chapter 01 is a continuation rather than a cut. The wordmark is the one place a display serif appears (Instrument Serif): a title page, not a splash screen. The **D of .DEV is a window** — a slab-serif letterform set as a versal, larger than the cap height, with project screenshots cycling inside it, clipped to its outline. Registration marks draw in at the corners, a counter and a row of chapter ticks show real preload progress. Once per session, skippable by any input.
+The **intro loader** wears the site's own clothes — the same ground, ink and hairlines, with the accent used as an accent — so arriving at chapter 01 is a continuation rather than a cut. The wordmark is the one place a display serif appears (Instrument Serif): a title page, not a splash screen. **REIN.DEV** sits beside the irregular ring, which draws itself on — the same gesture as the between-chapter overlay. Chapter ticks are the rail's small rings, filling in sequence. A frieze along the base draws with the counter, the way a chapter frieze draws with scroll. Registration marks at the corners. Once per session, skippable by any input.
 
 The **between-chapter loader** carries the incoming chapter's number, title and accent, so the colour lands before the page does. Its ring draws itself on with the same gesture as the arrow ring at the end of a chapter, then the numeral and title rise. It is handed across the navigation in `sessionStorage` and stamped into its covering state *before first paint* — so it is never seen sliding in twice, and the ring never draws twice.
 
@@ -195,14 +201,14 @@ build.mjs               static generator — writes dist/
 serve.mjs               local preview server
 content/
   chapters.mjs          chapters 01–08, ORDER, the derived export
-  chapters-b.mjs        FTC, Solidus, NoteTakerXX, ValoBot
-  diagrams.mjs          twelve line-art diagrams (a small SVG DSL)
-  shapes.mjs            rings, icon buttons, the D-window, crop marks, the frieze
+  chapters-b.mjs        FTC, Solidus, NoteTakerXX, ValoBot, DiscRec, TomeVoice
+  diagrams.mjs          fourteen line-art diagrams (a small SVG DSL)
+  shapes.mjs            rings, icon buttons, the wordmark, crop marks, the frieze
   blob.txt              the clip-path polygon, 159 points
 assets/
   css/site.css          the whole design system
   js/engine.js          loaders, scroll, transitions, reveals, draw-on
-  js/chapters.js        the twelve set pieces
+  js/chapters.js        the fourteen set pieces
   img/*.webp            screenshots pulled from each project
 screenshots/readme/     the images in this file
 .github/workflows/      Pages build and deploy
@@ -234,11 +240,11 @@ The design breathes at around 900px of height. Most people run the browser at
 but every gap collapsed and it read as jumbled. Two height breakpoints
 (`max-height: 900px` and `780px`) tighten the vertical rhythm deliberately
 instead: smaller numeral and title, tighter gaps, smaller set-piece stages and
-shaped screenshots. The twelve-item chapter list on each title card is set in
-two columns of six, which is both more compact and a better reading shape.
+shaped screenshots. The fourteen-item chapter list on each title card is set in
+two columns of seven, which is both more compact and a better reading shape.
 
 Checked clean at 1280×720, 1366×768, 1440×790, 1536×864, 1920×1080 and
-2400×1350 across all fourteen pages.
+2400×1350 across all sixteen pages.
 
 ## Accessibility
 

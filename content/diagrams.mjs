@@ -372,6 +372,55 @@ export const diagrams = {
     ${txt(802, 278, 'a stale roster reads like a correct one', { cls: 'ts' })}
     `,
   },
+
+  /* DiscRec — four parts, one platform-specific */
+  discrec: {
+    vb: '0 0 1020 300',
+    body: `
+    ${mod(10, 96, 150, 76, 'process finder', ['stable · Canary · PTB', 'active audio session'])}
+    ${arrow(160, 134, 208, 134)}
+
+    ${mod(208, 78, 196, 112, 'capture backend', ['WASAPI loopback', 'Core Audio tap', 'the only cfg'])}
+    ${arrow(404, 134, 452, 134)}
+
+    ${mod(452, 60, 200, 148, 'mixer + timeline', ['two PCM streams', 'two clocks', 'drift here, not later', 'sum + limiter'])}
+    ${arrow(652, 134, 700, 134)}
+
+    ${mod(700, 78, 150, 112, 'writer', ['Opus in Ogg', 'pages as made', 'crash → playable'])}
+    ${arrow(850, 134, 898, 134)}
+    ${mod(898, 96, 112, 76, 'one file', ['Downloads/', 'DiscRec/'])}
+
+    ${mod(208, 220, 196, 56, 'microphone', ['second stream'])}
+    ${arrow(306, 220, 306, 190)}
+    `,
+  },
+
+  /* TomeVoice — two contracts */
+  tomevoice: {
+    vb: '0 0 1020 300',
+    body: `
+    ${mod(10, 24, 176, 90, 'ingestion', ['EPUB · PDF · DOCX', 'TXT · MD · HTML', 'role at ingest'])}
+    ${arrow(186, 69, 234, 69)}
+    ${mod(234, 16, 200, 106, 'document model', ['Contract A', 'block → sentence → word', 'format-native anchors'])}
+
+    ${mod(10, 186, 176, 90, 'engine adapters', ['Android · WinRT', 'Piper · Kokoro', 'never speak()'])}
+    ${arrow(186, 231, 234, 231)}
+    ${mod(234, 178, 200, 106, 'synthesis result', ['Contract B', 'PCM + word timings', 'source, labelled'])}
+
+    ${arrow(434, 69, 490, 134)}
+    ${arrow(434, 231, 490, 166)}
+
+    ${mod(490, 96, 210, 108, 'audio pipeline', ['trim → stretch → gap', 'pauses → gain', 'timings remapped'])}
+    ${arrow(700, 150, 748, 150)}
+
+    ${mod(748, 78, 150, 70, 'reader', ['highlight overlay', 'sentence cursor'])}
+    ${mod(748, 168, 150, 70, 'player', ['lookahead', 'own buffer'])}
+
+    ${box(490, 232, 408, 52, { dash: true })}
+    ${txt(500, 252, 'NOTHING LEAVES THE DEVICE', { cls: 'tl' })}
+    ${txt(500, 270, 'neural voices downloaded on demand · no account', { cls: 'ts' })}
+    `,
+  },
 };
 
 export function renderDiagram(id) {
