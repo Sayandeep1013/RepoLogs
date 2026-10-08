@@ -33,7 +33,19 @@ const LINKS = {
   valobot: [['live', 'https://valobot.vercel.app'], ['repo', GH('ValoBot')]],
   discrec: [['releases', GH('DiscRec') + '/releases'], ['repo', GH('DiscRec')]],
   tomevoice: [['repo', GH('TomeVoice')], ['handoff', GH('TomeVoice') + '/blob/main/docs/16-session-handoff.md']],
+  'sabuj-planthouse': [['live', 'https://sayandeep1013.github.io/Sabuj-PlantHouse/'], ['repo', GH('Sabuj-PlantHouse')]],
+  brainai: [['live', 'https://sayandeep1013.github.io/BrainAI/'], ['repo', GH('BrainAI')], ['prd', GH('BrainAI') + '/blob/main/PRODUCT/prd.md']],
+  'horde-control': [['releases', GH('Horde-Control') + '/releases'], ['repo', GH('Horde-Control')]],
+  'n0-filtr': [['live', 'https://n0-filtr.vercel.app'], ['repo', GH('N0-filtr')]],
+  picaku: [['live', 'https://picaku.org'], ['source', 'private']],
 };
+
+const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven',
+  'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+const COUNT = WORDS[chapters.length] || String(chapters.length);
+const Count = COUNT[0].toUpperCase() + COUNT.slice(1);
+/* a chapter's derived number, by slug — for cross-references in prose */
+const num = (slug) => (chapters.find((c) => c.slug === slug) || { n: '??' }).n;
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -226,11 +238,12 @@ function pOutcome(ch, p) {
   <h3 class="ptitle">${esc(ch.repo)}</h3>
   <div class="out__links">
     ${links
-      .map(
-        ([k, u]) =>
-          `<a class="out__link" href="${u}" target="_blank" rel="noopener"><span class="k">${esc(
-            k
-          )}</span><span class="v">${esc(u.replace(/^https?:\/\//, ''))}</span></a>`
+      .map(([k, u]) =>
+        /^https?:/.test(u)
+          ? `<a class="out__link" href="${u}" target="_blank" rel="noopener"><span class="k">${esc(
+              k
+            )}</span><span class="v">${esc(u.replace(/^https?:\/\//, ''))}</span></a>`
+          : `<span class="out__link out__link--na"><span class="k">${esc(k)}</span><span class="v">${esc(u)}</span></span>`
       )
       .join('')}
   </div>
@@ -438,7 +451,7 @@ function indexPage() {
     <section class="panel doc rv" style="width:calc(var(--col) * 9)">
       <div class="kicker">Everything else</div>
       <h2>The index</h2>
-      <p class="pbody">Fourteen repos became chapters. These are the rest — coursework, experiments, and work that is real but did not need eight screens to explain.</p>
+      <p class="pbody">${Count} repos became chapters. These are the rest — coursework, experiments, and work that is real but did not need eight screens to explain.</p>
       <p class="pbody">Ordered roughly newest first.</p>
     </section>
     <section class="panel doc rv" style="width:calc(var(--col) * 7)">
@@ -463,7 +476,7 @@ function indexPage() {
     <section class="panel doc rv" style="width:calc(var(--col) * 8)">
       <div class="kicker">Everything else</div>
       <h2>The index</h2>
-      <p class="pbody">Fourteen repos became chapters. These are the rest — coursework, experiments, and work that is real but did not need eight screens to explain.</p>
+      <p class="pbody">${Count} repos became chapters. These are the rest — coursework, experiments, and work that is real but did not need eight screens to explain.</p>
       <p class="pbody">Roughly newest first. All of them are public.</p>
     </section>
     <section class="panel doc rv" style="width:calc(var(--col) * 6.4)"><ul class="idx">${mk(
@@ -500,18 +513,29 @@ function aboutPage() {
       <div class="kicker">About</div>
       <h2>${esc(SITE.owner)}</h2>
       <p class="pbody">${esc(SITE.blurb)}</p>
-      <p class="pbody">The pattern is not deliberate, but it is consistent: a terminal that streams video, a chat app's attachment cap used as a filesystem, a recorder that is not a video suite, a free tier running realtime multiplayer for eight people, a reader that owns the audio buffer, a phone running the model itself.</p>
+      <p class="pbody">The pattern is not deliberate, but it is consistent: a terminal that streams video, a chat app's attachment cap used as a filesystem, a recorder that is not a video suite, a free tier running realtime multiplayer for eight people, a reader that owns the audio buffer, a phone running the model itself, a shop that runs before its backend exists, animation that is unit-tested.</p>
       <p class="pbody">Most of these are built to a spec written before the code, and most of them carry an honest account of what does not work yet. That second part matters more than the first.</p>
     </section>
     <section class="panel doc rv" style="width:calc(var(--col) * 7)">
       <div class="plabel">Recurring</div>
       <ul class="idx" style="width:420px">
-        <li><a href="#" onclick="return false">Terminal as a real surface</a><span class="l">01 · 02</span><span class="d">Go TUI, Python TUI on PyPI</span></li>
-        <li><a href="#" onclick="return false">Discord as a surface</a><span class="l">03 · 04</span><span class="d">An attachment cap, and one job that is not OBS</span></li>
-        <li><a href="#" onclick="return false">Realtime on free tiers</a><span class="l">05 · 06 · 07</span><span class="d">Postgres-side logic, one row, two update paths</span></li>
-        <li><a href="#" onclick="return false">Documents, not bitmaps</a><span class="l">09 · 10 · 11</span><span class="d">JSON, coordinates, a document model for speech</span></li>
-        <li><a href="#" onclick="return false">On-device inference</a><span class="l">11 · 13</span><span class="d">Neural TTS on the phone, llama.cpp on the canvas</span></li>
-        <li><a href="#" onclick="return false">Reading closed systems</a><span class="l">03 · 14</span><span class="d">Attachment caps, WebGL bundles</span></li>
+        ${[
+          ['Terminal as a real surface', ['reelshell', 'termtypo'], 'Go TUI, Python TUI on PyPI'],
+          ['Discord as a surface', ['discvault', 'discrec'], 'An attachment cap, and one job that is not OBS'],
+          ['Realtime on free tiers', ['rein-bot', 'ftc-game', 'solidus-bingo'], 'Postgres-side logic, one row, two update paths'],
+          ['Rules written before code', ['horde-control', 'brainai'], 'A values register, a PRD of 38 requirements'],
+          ['Documents, not bitmaps', ['tessera', 'notetakerxx', 'tomevoice'], 'JSON, coordinates, a document model for speech'],
+          ['Grounded, or it says so', ['picaku', 'valobot', 'brainai'], 'Scoped retrieval, a refusal, a coverage gate'],
+          ['On-device inference', ['tomevoice', 'droiddoodle'], 'Neural TTS on the phone, llama.cpp on the canvas'],
+          ['The web, by hand', ['sabuj-planthouse', 'n0-filtr'], 'No framework, and motion that is asserted'],
+          ['Reading closed systems', ['discvault', 'martini'], 'Attachment caps, WebGL bundles'],
+        ]
+          .map(
+            ([t, slugs, d]) =>
+              `<li><a href="${href(chapters.findIndex((c) => c.slug === slugs[0]))}">${esc(t)}</a>` +
+              `<span class="l">${slugs.map(num).join(' · ')}</span><span class="d">${esc(d)}</span></li>`
+          )
+          .join('')}
       </ul>
     </section>
     <section class="panel out rv" style="width:calc(var(--col) * 6)">

@@ -13,10 +13,11 @@ export const SITE = {
   repo: 'RepoLogs',
   live: 'https://sayandeep1013.github.io/RepoLogs/',
   blurb:
-    'Fourteen projects that each take a surface which is not supposed to do the job, and make it do the job anyway.',
+    'Nineteen projects that each take a surface which is not supposed to do the job, and make it do the job anyway.',
 };
 
 import { chaptersB } from './chapters-b.mjs';
+import { chaptersC } from './chapters-c.mjs';
 
 const ALL = [
   /* ══════════════════════════ 01 ══════════════════════════ */
@@ -584,13 +585,15 @@ const ORDER = [
   'reelshell', 'termtypo',                    // the terminal is a real surface
   'discvault', 'discrec',                     // a platform limit / one Discord job
   'rein-bot', 'ftc-game', 'solidus-bingo',    // realtime multiplayer on free tiers
+  'horde-control',                            // a game whose rules are written down
   'co-canvas', 'tessera', 'notetakerxx',      // the document is the interesting object
-  'tomevoice',                                // the document, spoken
-  'valobot', 'droiddoodle',                   // grounded, or local
+  'tomevoice', 'picaku',                      // the document spoken / speech made a document
+  'valobot', 'brainai', 'droiddoodle',        // grounded, planned, or local
+  'sabuj-planthouse', 'n0-filtr',             // the web, made by hand
   'martini',                                  // reading a closed system
 ];
 
-const POOL = ALL.concat(chaptersB);
+const POOL = ALL.concat(chaptersB, chaptersC);
 
 export const chapters = ORDER.map((slug, i) => {
   const c = POOL.find((x) => x.slug === slug);
@@ -613,7 +616,7 @@ export const index = [
   ['Symbiote', 'JavaScript', 'The Venom symbiote, rendered in three.js.'],
   ['PanelWeaver', '—', 'Manga and manhwa panels converted into video.'],
   ['vlc-skins', '—', 'Curated, tested VLC skins with .vlt builds.'],
-  ['DroidDoodle-notes', 'Kotlin', 'See chapter 07.'],
+  
   ['dashboard-main', 'TypeScript', 'Earlier dashboard work.'],
   ['TerminalPyGames', 'Python', 'Small terminal games.'],
   ['Image_Manipulation', 'HTML', 'Browser image processing experiments.'],

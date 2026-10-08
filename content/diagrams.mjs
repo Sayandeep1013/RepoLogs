@@ -421,6 +421,160 @@ export const diagrams = {
     ${txt(500, 270, 'neural voices downloaded on demand · no account', { cls: 'ts' })}
     `,
   },
+
+  /* Sabuj — one data layer, two answers */
+  sabuj: {
+    vb: '0 0 1020 300',
+    body: `
+    ${mod(10, 90, 160, 90, 'eleven pages', ['a shell + one script', 'ui.js injects chrome', 'filters in the URL'])}
+    ${arrow(170, 135, 220, 135)}
+    ${mod(220, 90, 150, 90, 'Api.*', ['api.js', 'the only door'])}
+    ${arrow(370, 135, 420, 135)}
+    ${mod(420, 100, 120, 70, 'USE_MOCK', ['config.js'])}
+
+    ${path('M540 135 L570 135 L570 65')}${arrow(570, 65, 600, 65)}
+    ${txt(562, 56, 'true', { cls: 'tl', anchor: 'end' })}
+    ${mod(600, 20, 200, 90, 'local data files', ['mock-data.js', 'short artificial delay', 'OTP is always 1234'])}
+
+    ${path('M570 135 L570 225')}${arrow(570, 225, 600, 225)}
+    ${txt(562, 220, 'false', { cls: 'tl', anchor: 'end' })}
+    ${mod(600, 180, 200, 90, 'REST under API_BASE', ['17 endpoints, specified', 'server recalculates', 'every total'])}
+
+    ${path('M800 65 L830 65 L830 120')}${arrow(830, 120, 860, 120)}
+    ${path('M800 225 L830 225 L830 150')}${arrow(830, 150, 860, 150)}
+    ${mod(860, 100, 150, 70, 'same shapes', ['either way'])}
+
+    ${mod(10, 222, 160, 64, 'Store', ['cart · wishlist', 'fires store:change'])}
+    ${arrow(90, 222, 90, 186)}
+    ${box(220, 222, 300, 64, { dash: true })}
+    ${txt(230, 242, 'ART.JS — NO IMAGE FILES', { cls: 'tl' })}
+    ${txt(230, 262, 'spec + hash(product id) → the same plant', { cls: 'ts' })}
+    ${txt(230, 276, 'on every page, every visit', { cls: 'ts' })}
+    `,
+  },
+
+  /* BrainAI — the wave, and the gate */
+  brainai: {
+    vb: '0 0 1020 300',
+    body: `
+    ${mod(10, 108, 120, 64, 'sentence', ['the seed'])}
+    ${arrow(130, 140, 170, 140)}
+    ${mod(170, 60, 200, 150, 'wave.ts', ['sections', 'breadth-first expand', 'Tavily research', 'auto-accept forks', 'gap-fill until closed', 'stops, and says why'])}
+    ${arrow(370, 135, 410, 135)}
+    ${mod(410, 92, 150, 86, 'graph.json', ['Zod-parsed', 'not trusted', 'the source of truth'])}
+    ${arrow(560, 135, 600, 135)}
+    ${mod(600, 74, 176, 122, 'coverage gate', ['34 keys', 'evidence per key', 'live citation rules', 'blocks compile'])}
+    ${arrow(776, 135, 816, 135)}
+    ${mod(816, 74, 194, 122, 'compile', ['→ compile-tmp/', 'secret scan in memory', 'copy into place', '45 files'])}
+
+    ${path('M688 196 L688 222 L340 222', { dash: true })}${arrow(340, 222, 340, 212)}
+    ${txt(580, 216, 'a gap → grow it', { cls: 'ts' })}
+
+    ${box(170, 236, 390, 52, { dash: true })}
+    ${txt(180, 256, 'STREAMED PREVIEWS', { cls: 'tl' })}
+    ${txt(180, 274, 'a child is drawn as a dashed ghost the moment its JSON closes', { cls: 'ts' })}
+    ${line(270, 210, 270, 236, { dash: true })}
+
+    ${box(816, 220, 194, 66, { dash: true })}
+    ${txt(826, 240, 'OR, IN THE BROWSER', { cls: 'tl' })}
+    ${txt(826, 258, 'the same engine on IndexedDB', { cls: 'ts' })}
+    ${txt(826, 274, 'the pack leaves as a .zip', { cls: 'ts' })}
+    `,
+  },
+
+  /* Horde Control — one ordered tick */
+  horde: {
+    vb: '0 0 1020 300',
+    body: `
+    ${mod(10, 30, 160, 64, 'SimClock', ['one clock'])}
+    ${mod(10, 196, 160, 76, 'PauseAuthority', ['draft · menu · death', 'freezes the tick'])}
+    ${path('M170 62 L190 62 L190 112')}${arrow(190, 112, 216, 112)}
+    ${path('M170 234 L190 234 L190 182')}${arrow(190, 182, 216, 182)}
+
+    ${mod(216, 88, 178, 118, 'SimLoop', ['one ordered tick', 'steering + separation', 'inside the loop', 'no NavigationAgent'])}
+
+    ${arrow(394, 120, 450, 58)}
+    ${arrow(394, 147, 450, 157)}
+    ${arrow(394, 176, 450, 252)}
+    ${mod(450, 20, 196, 80, 'Wave Director', ['Pressure Metric', 'sampled every 0.5 s'])}
+    ${mod(450, 120, 196, 80, 'goblins', ['three intents', 'attack slots on a ring'])}
+    ${mod(450, 220, 196, 70, 'player + Tower', ['auto-aimed bow', 'two health bars'])}
+
+    ${arrow(646, 160, 712, 160)}
+    ${txt(679, 150, 'run ends', { cls: 'tl', anchor: 'middle' })}
+    ${mod(712, 120, 160, 80, 'MetaProgress', ['Cores', 'skill tree', 'achievements'])}
+    ${arrow(872, 160, 920, 160)}
+    ${mod(920, 126, 90, 68, 'save', ['profile'])}
+
+    ${box(712, 20, 298, 80, { dash: true })}
+    ${txt(722, 40, 'LEASH RULE', { cls: 'tl' })}
+    ${txt(722, 60, '20 s without a hit → a Player Hunter', { cls: 'ts' })}
+    ${txt(722, 74, 'converts, permanently, to a Tower Seeker', { cls: 'ts' })}
+    ${txt(722, 88, 'the safe corner is designed out', { cls: 'ts' })}
+    ${line(646, 140, 690, 100, { dash: true })}
+
+    ${box(712, 222, 298, 64, { dash: true })}
+    ${txt(722, 242, 'WRITTEN DOWN FIRST', { cls: 'tl' })}
+    ${txt(722, 262, '30 design docs · a values register', { cls: 'ts' })}
+    ${txt(722, 276, '~750 headless test cases', { cls: 'ts' })}
+    `,
+  },
+
+  /* No Filter — one loop */
+  nofilter: {
+    vb: '0 0 1020 300',
+    body: `
+    ${mod(10, 40, 210, 80, 'motion tokens', ['durations · eases', 'distances, written down'])}
+    ${mod(10, 172, 210, 100, 'npm run verify', ['tokens 138 · motion 283', 'visual · budget 7', 'probes for a 2nd rAF'])}
+    ${arrow(220, 80, 380, 128)}
+    ${path('M220 222 L300 222 L300 172', { dash: true })}${arrow(300, 172, 380, 162)}
+    ${txt(310, 238, 'asserts', { cls: 'tl' })}
+
+    ${mod(380, 92, 200, 106, 'GSAP ticker', ['the only loop', 'no second', 'requestAnimationFrame'])}
+
+    ${arrow(580, 120, 660, 42)}
+    ${arrow(580, 136, 660, 112)}
+    ${arrow(580, 156, 660, 182)}
+    ${arrow(580, 172, 660, 252)}
+    ${mod(660, 14, 180, 56, 'Lenis', ['smooth scroll'])}
+    ${mod(660, 84, 180, 56, 'ScrollTrigger', ['pinned · scrubbed'])}
+    ${mod(660, 154, 180, 56, 'Matter.js', ['56 bodies · block pit'])}
+    ${mod(660, 224, 180, 56, 'verlet rope', ['14 points · wire rig'])}
+
+    ${box(872, 84, 138, 126, { dash: true })}
+    ${txt(882, 104, 'REDUCED,', { cls: 'tl' })}
+    ${txt(882, 118, 'NOT DELETED', { cls: 'tl' })}
+    ${txt(882, 140, 'a light that follows', { cls: 'ts' })}
+    ${txt(882, 154, 'the pointer stays;', { cls: 'ts' })}
+    ${txt(882, 172, 'a colour that', { cls: 'ts' })}
+    ${txt(882, 186, 'changes on its', { cls: 'ts' })}
+    ${txt(882, 200, 'own goes', { cls: 'ts' })}
+    `,
+  },
+
+  /* Picaku — sync answers first */
+  picaku: {
+    vb: '0 0 1020 300',
+    body: `
+    ${mod(10, 104, 130, 80, 'record', ['client-side', 'offline queue'])}
+    ${arrow(140, 144, 168, 144)}
+    ${mod(168, 104, 140, 80, 'transcribe', ['Whisper', 'or on-device'])}
+    ${arrow(308, 144, 336, 144)}
+    ${mod(336, 98, 150, 92, 'POST /sync', ['saves raw text', '200 OK at once', 'client clears copy'])}
+
+    ${box(514, 10, 240, 280, { dash: true })}
+    ${txt(524, 30, 'BACKGROUND TASK', { cls: 'tl' })}
+    ${arrow(486, 130, 530, 88)}
+    ${arrow(486, 160, 530, 206)}
+    ${mod(530, 42, 208, 92, 'extract', ['LLM → strict JSON', 'summary · decisions', 'action items'])}
+    ${mod(530, 162, 208, 108, 'embed', ['ONNX MiniLM, 384-d', 'chunks + summaries', '→ pgvector', 'edits re-embed'])}
+
+    ${arrow(738, 70, 790, 70)}
+    ${mod(790, 22, 220, 96, 'email draft', ['LangGraph · on request', 'saved as a Gmail draft', 'never sends'])}
+    ${arrow(738, 214, 790, 214)}
+    ${mod(790, 140, 220, 140, 'chat', ['WHERE user_id = me', 'AND note_id, if scoped', 'THEN the vector search', 'last 10 messages,', 'read from the database'])}
+    `,
+  },
 };
 
 export function renderDiagram(id) {

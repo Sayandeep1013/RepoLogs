@@ -1,6 +1,6 @@
 # rein.dev
 
-A horizontally-scrolling portfolio in the manner of [ikony.tv](https://ikony.tv). Fourteen chapters, one per repository, each arguing the same thing: **take a surface that is not supposed to do the job, and make it do the job anyway.** A terminal that streams video, a chat app's attachment cap used as a filesystem, a free tier running realtime multiplayer for eight people, a phone running the model itself.
+A horizontally-scrolling portfolio in the manner of [ikony.tv](https://ikony.tv). Nineteen chapters, one per repository, each arguing the same thing: **take a surface that is not supposed to do the job, and make it do the job anyway.** A terminal that streams video, a chat app's attachment cap used as a filesystem, a free tier running realtime multiplayer for eight people, a phone running the model itself, a shop that runs before its backend exists.
 
 No framework, no dependencies, no build tooling. `node build.mjs` writes a static `dist/`.
 
@@ -49,7 +49,7 @@ track.style.transform = `translate3d(${-cur}px,0,0)`
 
 ---
 
-## The fourteen chapters
+## The nineteen chapters
 
 | # | Chapter | Repo | The constraint it breaks |
 |---|---|---|---|
@@ -60,13 +60,18 @@ track.style.transform = `translate3d(${-cur}px,0,0)`
 | 05 | ReIN Bot | [Rein-Bot](https://github.com/Sayandeep1013/Rein-Bot) | A free tier can host realtime multiplayer |
 | 06 | FTC | [FTC-Game](https://github.com/Sayandeep1013/FTC-Game) | No client decides the outcome |
 | 07 | Solidus | [Solidus-Bingo](https://github.com/Sayandeep1013/Solidus-Bingo) | A sideloaded app can still be updated |
-| 08 | CanVas | [co-canvas](https://github.com/Sayandeep1013/co-canvas) | A URL is the whole account system |
-| 09 | Tessera | [Tessera](https://github.com/Sayandeep1013/Tessera) | A drawing is a document an AI can edit |
-| 10 | NoteTakerXX | [NoteTakerXx](https://github.com/Sayandeep1013/NoteTakerXx) | Notes have coordinates |
-| 11 | TomeVoice | [TomeVoice](https://github.com/Sayandeep1013/TomeVoice) | No engine will give you the gap between words |
-| 12 | ValoBot | [ValoBot](https://github.com/Sayandeep1013/ValoBot) | A model with no cutoff, if it fetches first |
-| 13 | DroidDoodle | [DroidDoodle](https://github.com/Sayandeep1013/DroidDoodle) | A phone runs the model that drives the canvas |
-| 14 | Santioni | [Martini-Recreation](https://github.com/Sayandeep1013/Martini-Recreation) | A closed WebGL system can be read |
+| 08 | Horde Control | [Horde-Control](https://github.com/Sayandeep1013/Horde-Control) | The safe corner can be designed out |
+| 09 | CanVas | [co-canvas](https://github.com/Sayandeep1013/co-canvas) | A URL is the whole account system |
+| 10 | Tessera | [Tessera](https://github.com/Sayandeep1013/Tessera) | A drawing is a document an AI can edit |
+| 11 | NoteTakerXX | [NoteTakerXx](https://github.com/Sayandeep1013/NoteTakerXx) | Notes have coordinates |
+| 12 | TomeVoice | [TomeVoice](https://github.com/Sayandeep1013/TomeVoice) | No engine will give you the gap between words |
+| 13 | Picaku | Picaku (private) | Scope is a SQL filter, not a prompt |
+| 14 | ValoBot | [ValoBot](https://github.com/Sayandeep1013/ValoBot) | A model with no cutoff, if it fetches first |
+| 15 | BrainAI | [BrainAI](https://github.com/Sayandeep1013/BrainAI) | Compile is a gate, not a button |
+| 16 | DroidDoodle | [DroidDoodle](https://github.com/Sayandeep1013/DroidDoodle) | A phone runs the model that drives the canvas |
+| 17 | Sabuj | [Sabuj-PlantHouse](https://github.com/Sayandeep1013/Sabuj-PlantHouse) | A shop can ship before its backend |
+| 18 | No Filter | [N0-filtr](https://github.com/Sayandeep1013/N0-filtr) | Animation can be asserted, not eyeballed |
+| 19 | Santioni | [Martini-Recreation](https://github.com/Sayandeep1013/Martini-Recreation) | A closed WebGL system can be read |
 
 Reading order lives in `ORDER` in `content/chapters.mjs`. Chapter numbers are derived from it, so re-sequencing is a one-line change and the labels can never drift.
 
@@ -96,13 +101,18 @@ Every chapter runs the same grammar, so you learn it once in 01 and read the res
 | 05 | `round` | a 20s round — countdown, guesses graded, near-miss tier revealed |
 | 06 | `trumps` | stat called, cards compared, pile taken |
 | 07 | `bingo` | numbers drawn server-side, board marks, a line completes |
-| 08 | `presence` | two cursors, a document filling and a canvas being drawn, one Yjs doc |
-| 09 | `tessera` | canvas ↔ JSON — hover either side, the other highlights |
-| 10 | `canvas` | notes placed on a dot grid, then linked with rope curves |
-| 11 | `voice` | a sentence spoken with word-gap injection on derived timings |
-| 12 | `cypher` | two questions — the second fails to ground, and is refused |
-| 13 | `agent` | a sentence in, tool calls stream, nodes snap onto the board |
-| 14 | `shader` | a real WebGL fragment shader — the chapter is about shaders |
+| 08 | `horde` | a live canvas wave — three goblin intents, an auto-aimed bow, the leash, a level-up draft |
+| 09 | `presence` | two cursors, a document filling and a canvas being drawn, one Yjs doc |
+| 10 | `tessera` | canvas ↔ JSON — hover either side, the other highlights |
+| 11 | `canvas` | notes placed on a dot grid, then linked with rope curves |
+| 12 | `voice` | a sentence spoken with word-gap injection on derived timings |
+| 13 | `recall` | six meetings chunked; a scoped thread filters before it searches, a global one does not |
+| 14 | `cypher` | two questions — the second fails to ground, and is refused |
+| 15 | `tree` | seed, dashed ghosts, real nodes, an auto-decided fork, coverage closing to 34/34 |
+| 16 | `agent` | a sentence in, tool calls stream, nodes snap onto the board |
+| 17 | `plant` | seeded plant mascots with a sticker filter — same id, same plant, recoloured by pot |
+| 18 | `rope` | three verlet wires between two frames you can drag |
+| 19 | `shader` | a real WebGL fragment shader — the chapter is about shaders |
 
 Set pieces are decorative. Nothing in them gates content, and each is wrapped so a failure cannot break the page.
 
@@ -136,13 +146,18 @@ Sampled from each project's own screenshots, then corrected for contrast. A sing
 | 05 | ReIN Bot | `#A31F72` | `#DE54AB` |
 | 06 | FTC | `#7F4F0A` | `#C67A10` |
 | 07 | Solidus | `#106534` | `#1BA755` |
-| 08 | CanVas | `#973911` | `#E75D23` |
-| 09 | Tessera | `#125C91` | `#2595E4` |
-| 10 | NoteTakerXX | `#6A570C` | `#A58812` |
-| 11 | TomeVoice | `#6B3A18` | `#E0A86A` |
-| 12 | ValoBot | `#AB1C40` | `#E4587B` |
-| 13 | DroidDoodle | `#6F22D3` | `#A36EE7` |
-| 14 | Santioni | `#B8241F` | `#E25F5A` |
+| 08 | Horde Control | `#4A5716` | `#A3B44E` |
+| 09 | CanVas | `#973911` | `#E75D23` |
+| 10 | Tessera | `#125C91` | `#2595E4` |
+| 11 | NoteTakerXX | `#6A570C` | `#A58812` |
+| 12 | TomeVoice | `#6B3A18` | `#E0A86A` |
+| 13 | Picaku | `#9C3220` | `#FF6F5A` |
+| 14 | ValoBot | `#AB1C40` | `#E4587B` |
+| 15 | BrainAI | `#085C4D` | `#3CD8C0` |
+| 16 | DroidDoodle | `#6F22D3` | `#A36EE7` |
+| 17 | Sabuj | `#275D35` | `#7CC48A` |
+| 18 | No Filter | `#3A3836` | `#BFBAB5` |
+| 19 | Santioni | `#B8241F` | `#E25F5A` |
 
 ---
 
@@ -202,19 +217,20 @@ serve.mjs               local preview server
 content/
   chapters.mjs          chapters 01–08, ORDER, the derived export
   chapters-b.mjs        FTC, Solidus, NoteTakerXX, ValoBot, DiscRec, TomeVoice
-  diagrams.mjs          fourteen line-art diagrams (a small SVG DSL)
+  chapters-c.mjs        Sabuj, BrainAI, Horde Control, No Filter, Picaku
+  diagrams.mjs          nineteen line-art diagrams (a small SVG DSL)
   shapes.mjs            rings, icon buttons, the wordmark, crop marks, the frieze
   blob.txt              the clip-path polygon, 159 points
 assets/
   css/site.css          the whole design system
   js/engine.js          loaders, scroll, transitions, reveals, draw-on
-  js/chapters.js        the fourteen set pieces
+  js/chapters.js        the nineteen set pieces
   img/*.webp            screenshots pulled from each project
 screenshots/readme/     the images in this file
 .github/workflows/      Pages build and deploy
 ```
 
-Adding a chapter is one entry in `chapters-b.mjs`, one slug in `ORDER`, and a diagram.
+Adding a chapter is one entry in `chapters-c.mjs`, one slug in `ORDER`, and a diagram.
 
 ---
 
@@ -240,8 +256,8 @@ The design breathes at around 900px of height. Most people run the browser at
 but every gap collapsed and it read as jumbled. Two height breakpoints
 (`max-height: 900px` and `780px`) tighten the vertical rhythm deliberately
 instead: smaller numeral and title, tighter gaps, smaller set-piece stages and
-shaped screenshots. The fourteen-item chapter list on each title card is set in
-two columns of seven, which is both more compact and a better reading shape.
+shaped screenshots. The nineteen-item chapter list on each title card is set in
+three columns of seven, which is both more compact and a better reading shape.
 
 Checked clean at 1280×720, 1366×768, 1440×790, 1536×864, 1920×1080 and
 2400×1350 across all sixteen pages.
