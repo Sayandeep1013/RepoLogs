@@ -37,7 +37,7 @@ const LINKS = {
   brainai: [['live', 'https://sayandeep1013.github.io/BrainAI/'], ['repo', GH('BrainAI')], ['prd', GH('BrainAI') + '/blob/main/PRODUCT/prd.md']],
   'horde-control': [['releases', GH('Horde-Control') + '/releases'], ['repo', GH('Horde-Control')]],
   'n0-filtr': [['live', 'https://n0-filtr.vercel.app'], ['repo', GH('N0-filtr')]],
-  picaku: [['live', 'https://picaku.org'], ['source', 'private']],
+  picaku: [['live', 'https://auth.picaku.org'], ['source', 'private']],
 };
 
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven',
